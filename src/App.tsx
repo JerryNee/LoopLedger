@@ -321,6 +321,22 @@ export default function App() {
               placeholder="https://github.com/..."
             />
           </label>
+          <label className="wide-field">
+            Primary CLI command
+            <input
+              value={state.project.testCommand}
+              onChange={event => updateProject('testCommand', event.target.value)}
+              placeholder="testsprite test run ..."
+            />
+          </label>
+          <label className="wide-field">
+            Submission goal
+            <textarea
+              value={state.project.submissionGoal}
+              onChange={event => updateProject('submissionGoal', event.target.value)}
+              placeholder="What should the loop prove?"
+            />
+          </label>
         </section>
 
         <section className="metric-grid" aria-label="Loop summary">

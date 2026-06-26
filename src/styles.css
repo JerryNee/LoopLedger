@@ -315,6 +315,14 @@ p {
   background: var(--surface);
 }
 
+.wide-field {
+  grid-column: 1 / -1;
+}
+
+.project-strip textarea {
+  min-height: 64px;
+}
+
 label {
   display: grid;
   gap: 6px;

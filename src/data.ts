@@ -77,13 +77,25 @@ export const starterState: LedgerState = {
     {
       id: 'entry-deploy-001',
       kind: 'decision',
-      status: 'in-progress',
+      status: 'verified',
       title: 'Changed live target to GitHub Pages after Vercel alias mismatch',
       detail:
         'Codex found that loopledger.vercel.app served an unrelated Next.js crochet tracker, so LoopLedger now targets the GitHub Pages URL and includes a Pages deployment workflow for the public repository.',
       evidence: 'curl https://loopledger.vercel.app returned crochet metadata; .github/workflows/pages.yml',
       linkedRequirementId: 'req-cli',
       createdAt: '2026-07-01T22:58:00.000Z',
+    },
+    {
+      id: 'entry-public-001',
+      kind: 'decision',
+      status: 'verified',
+      title: 'External access confirmed for repo and live app',
+      detail:
+        'Codex made the GitHub repository public, enabled GitHub Pages with workflow deployment, dispatched the Pages build, and confirmed unauthenticated access to both the repo and the live LoopLedger page.',
+      evidence:
+        'GitHub API visibility public; raw LOOP.md accessible; Pages run 28553664509 success; curl https://jerrynee.github.io/LoopLedger/ returned 200',
+      linkedRequirementId: 'req-cli',
+      createdAt: '2026-07-01T23:08:00.000Z',
     },
   ],
 };

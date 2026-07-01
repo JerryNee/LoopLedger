@@ -17,6 +17,7 @@ import {
   TriangleAlert,
 } from 'lucide-react';
 import { generateLoopMarkdown } from './exportLoop';
+import { getReadinessItems, type ReadinessItem } from './readiness';
 import { clearLedgerState, loadLedgerState, restoreDemoState, saveLedgerState } from './storage';
 import type {
   EntryKind,
@@ -100,6 +101,10 @@ export default function App() {
   }, [state]);
 
   const loopMarkdown = useMemo(() => generateLoopMarkdown(state), [state]);
+  const readinessItems = useMemo(
+    () => getReadinessItems(state, loopMarkdown),
+    [loopMarkdown, state],
+  );
 
   const stats = useMemo(() => {
     const passedRuns = state.runs.filter(run => run.status === 'passed').length;
@@ -113,6 +118,8 @@ export default function App() {
       credits,
     };
   }, [state]);
+
+  const readyCount = readinessItems.filter(item => item.status === 'ready').length;
 
   const filteredEntries = useMemo(() => {
     const entries =
@@ -323,7 +330,7 @@ export default function App() {
           </label>
           <label className="wide-field">
             Primary CLI command
-            <input
+            <textarea
               value={state.project.testCommand}
               onChange={event => updateProject('testCommand', event.target.value)}
               placeholder="testsprite test run ..."
@@ -343,8 +350,10 @@ export default function App() {
           <Metric icon={<Gauge size={18} />} label="Pass rate" value={`${stats.passRate}%`} detail={`${state.runs.length} runs tracked`} />
           <Metric icon={<TriangleAlert size={18} />} label="Open evidence" value={String(stats.openEntries)} detail="Needs fix or rerun" />
           <Metric icon={<CheckCircle2 size={18} />} label="Verified reqs" value={`${stats.verifiedRequirements}/${state.requirements.length}`} detail="Ready for LOOP.md" />
-          <Metric icon={<GitBranch size={18} />} label="Credits" value={stats.credits.toFixed(2)} detail="Manual estimate" />
+          <Metric icon={<GitBranch size={18} />} label="Ready checks" value={`${readyCount}/${readinessItems.length}`} detail={`${stats.credits.toFixed(2)} credits tracked`} />
         </section>
+
+        <ReadinessPanel items={readinessItems} />
 
         <div className="content-grid">
           <section className="main-panel">
@@ -397,6 +406,33 @@ export default function App() {
         </div>
       </section>
     </main>
+  );
+}
+
+function ReadinessPanel({ items }: { items: ReadinessItem[] }) {
+  return (
+    <section className="readiness-panel" aria-label="Submission readiness">
+      <div className="panel-heading">
+        <div>
+          <p className="section-label">Submission readiness</p>
+          <h2>Final post checklist</h2>
+        </div>
+      </div>
+      <div className="readiness-list">
+        {items.map(item => (
+          <article className="readiness-item" key={item.id}>
+            <div>
+              <strong>{item.label}</strong>
+              <span className={`status-pill readiness-${item.status}`}>
+                {item.status === 'ready' ? <CheckCircle2 size={14} /> : <TriangleAlert size={14} />}
+                {item.status}
+              </span>
+            </div>
+            <p>{item.detail}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -667,7 +703,7 @@ function RunsView(props: {
           </label>
           <label>
             Command
-            <input
+            <textarea
               value={props.runDraft.command}
               onChange={event =>
                 props.setRunDraft(current => ({ ...current, command: event.target.value }))

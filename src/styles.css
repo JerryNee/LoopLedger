@@ -372,6 +372,58 @@ label {
   font-size: 1.22rem;
 }
 
+.readiness-panel {
+  margin: 0 0 14px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.readiness-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.readiness-item {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.readiness-item > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.readiness-item strong {
+  font-size: 0.84rem;
+}
+
+.readiness-item p {
+  margin: 7px 0 0;
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.readiness-ready {
+  border-color: oklch(0.78 0.08 150);
+  background: oklch(0.96 0.035 150);
+  color: oklch(0.34 0.1 150);
+}
+
+.readiness-attention {
+  border-color: oklch(0.82 0.09 76);
+  background: oklch(0.972 0.035 76);
+  color: oklch(0.42 0.1 76);
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 390px;
@@ -403,6 +455,7 @@ label {
 .segmented {
   display: flex;
   gap: 4px;
+  max-width: 100%;
   padding: 3px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -707,6 +760,7 @@ pre {
 
   .project-strip,
   .metric-grid,
+  .readiness-list,
   .two-column,
   .form-row.compact {
     grid-template-columns: 1fr;
@@ -719,6 +773,10 @@ pre {
   .run-row {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+
+  .segmented {
+    width: 100%;
   }
 }
 

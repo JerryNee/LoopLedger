@@ -8,10 +8,17 @@ The project is designed for TestSprite Hackathon Season 3, where the important a
 
 - Tracks requirements with owner, priority, status, and evidence links.
 - Records TestSprite CLI runs with command, target URL, pass/fail counts, duration, and follow-up notes.
-- Captures loop evidence as ledger entries across plan, test, failure, fix, rerun, and submit stages.
+- Captures loop evidence as ledger entries across plan, test, failure, fix, rerun, and decision stages.
 - Filters the ledger by lifecycle stage.
-- Generates a structured `LOOP.md` preview that can be copied or downloaded.
+- Generates a structured `LOOP.md` preview with readiness checks and one-line agent loop iterations.
+- Shows a final submission checklist for the live URL, public repo, CLI command, run evidence, failure/fix loop, export, and CI/CD bonus.
 - Stores work locally in the browser so the workspace survives refreshes.
+
+## Submission Links
+
+- Live app: <https://loopledger.vercel.app>
+- Repository: <https://github.com/JerryNee/LoopLedger>
+- Loop artifact: [`LOOP.md`](./LOOP.md)
 
 ## Why It Exists
 
@@ -62,4 +69,4 @@ The TestSprite CLI flow expects a live deployed app. A simple deployment path is
 
 ## Current Status
 
-This repository contains the MVP product shell, data model, local persistence, ledger workflow, CLI run tracking, and markdown export. The next major phase is to use the app during the actual hackathon loop and let the recorded evidence shape the final submission.
+This repository contains the product shell, data model, local persistence, readiness checklist, ledger workflow, CLI run tracking, markdown export, committed `LOOP.md`, and CI build verification. The next step is to run the real TestSprite CLI pass against the deployed app, record the failures/fixes/reruns, and let that evidence shape the final Discord submission.

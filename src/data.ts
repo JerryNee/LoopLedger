@@ -1,10 +1,87 @@
 import type { LedgerState } from './types';
 
+export const starterState: LedgerState = {
+  project: {
+    name: 'LoopLedger',
+    liveUrl: 'https://loopledger.vercel.app',
+    repoUrl: 'https://github.com/JerryNee/LoopLedger',
+    testCommand:
+      'testsprite test run <test-id> --target-url https://loopledger.vercel.app --wait --output json',
+    submissionGoal:
+      'Use TestSprite CLI failures and reruns to prove LoopLedger was hardened through an agent-led QA loop.',
+  },
+  requirements: [
+    {
+      id: 'req-loop-md',
+      title: 'Keep an agent-written LOOP.md in the repo and app export',
+      owner: 'Agent',
+      priority: 'P0',
+      status: 'implemented',
+      acceptance:
+        'The repository includes LOOP.md and the export produces submission context, readiness checks, one-line loop iterations, CLI runs, and detailed evidence.',
+    },
+    {
+      id: 'req-readiness',
+      title: 'Show submission readiness before the final Discord post',
+      owner: 'Agent',
+      priority: 'P0',
+      status: 'implemented',
+      acceptance:
+        'The workspace flags live URL, public repo, CLI command, requirements, run evidence, failure/fix evidence, LOOP.md export, and CI/CD status.',
+    },
+    {
+      id: 'req-cli',
+      title: 'Record real TestSprite CLI runs against the deployed app',
+      owner: 'Builder',
+      priority: 'P0',
+      status: 'planned',
+      acceptance:
+        'After deployment, each TestSprite run records the command, target URL, outcome, notes, and follow-up fix or rerun.',
+    },
+  ],
+  runs: [],
+  entries: [
+    {
+      id: 'entry-start-001',
+      kind: 'plan',
+      status: 'verified',
+      title: 'Confirmed Season 3 loop rules and repository baseline',
+      detail:
+        'After the hackathon window opened, Codex verified the live Vercel URL, GitHub remote, existing CI, and local lint/build status before changing the product.',
+      evidence: 'curl https://loopledger.vercel.app, git remote, npm run lint, npm run build',
+      linkedRequirementId: 'req-loop-md',
+      createdAt: '2026-07-01T22:46:00.000Z',
+    },
+    {
+      id: 'entry-gap-001',
+      kind: 'failure',
+      status: 'resolved',
+      title: 'Found missing committed LOOP.md evidence',
+      detail:
+        'The app could export markdown, but the public repository did not yet carry the required agent-written LOOP.md artifact for judges to inspect.',
+      evidence: 'Repository root scan before this change',
+      linkedRequirementId: 'req-loop-md',
+      createdAt: '2026-07-01T22:48:00.000Z',
+    },
+    {
+      id: 'entry-fix-001',
+      kind: 'fix',
+      status: 'verified',
+      title: 'Added readiness checks and stronger LOOP.md timeline export',
+      detail:
+        'Codex added a submission readiness panel, replaced first-run demo data with a truthful hackathon starter ledger, and expanded the export with one-line agent loop iterations.',
+      evidence: 'commit: feat: harden hackathon loop evidence',
+      linkedRequirementId: 'req-readiness',
+      createdAt: '2026-07-01T22:52:00.000Z',
+    },
+  ],
+};
+
 export const demoState: LedgerState = {
   project: {
     name: 'LoopLedger',
     liveUrl: 'https://loopledger.vercel.app',
-    repoUrl: 'https://github.com/JerryNee/loopledger',
+    repoUrl: 'https://github.com/JerryNee/LoopLedger',
     testCommand: 'testsprite test run <test-id> --target-url https://loopledger.vercel.app --wait --output json',
     submissionGoal:
       'Prove that the agent used TestSprite CLI failures and reruns to harden the final web app.',

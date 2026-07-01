@@ -2,21 +2,22 @@
 
 ## Submission Context
 
-- Live URL: https://loopledger.vercel.app
+- Live URL: https://jerrynee.github.io/LoopLedger/
 - Repository: https://github.com/JerryNee/LoopLedger
-- Primary CLI command: `testsprite test run <test-id> --target-url https://loopledger.vercel.app --wait --output json`
+- Primary CLI command: `testsprite test run <test-id> --target-url https://jerrynee.github.io/LoopLedger/ --wait --output json`
 - Goal: Use TestSprite CLI failures and reruns to prove LoopLedger was hardened through an agent-led QA loop.
 
 ## Submission Readiness
 
-- [x] Live app URL: https://loopledger.vercel.app
-- [x] Public repository: https://github.com/JerryNee/LoopLedger
-- [x] Primary CLI command: testsprite test run <test-id> --target-url https://loopledger.vercel.app --wait --output json
+- [x] Live app URL: https://jerrynee.github.io/LoopLedger/
+- [x] Repository URL: https://github.com/JerryNee/LoopLedger
+- [ ] External access: Confirm the repo is public and the live page resolves before submitting.
+- [x] Primary CLI command: testsprite test run <test-id> --target-url https://jerrynee.github.io/LoopLedger/ --wait --output json
 - [x] Requirements: 3 requirements captured.
 - [ ] CLI run evidence: Pending until TestSprite CLI is run against the live app.
 - [x] Failure/fix loop: Failure and fix evidence are linked in the ledger.
 - [x] LOOP.md export: Agent loop timeline and detailed evidence are exportable.
-- [x] CI/CD bonus: GitHub Actions runs lint and build on push and pull request.
+- [x] CI/CD bonus: GitHub Actions runs lint, build, and Pages deployment workflows.
 
 ## Requirements
 
@@ -26,15 +27,16 @@
 
 ## Agent Loop Timeline
 
-1. Jul 1, 2026, 5:46 PM - plan/verified: Confirmed Season 3 loop rules and repository baseline. After the hackathon window opened, Codex verified the live Vercel URL, GitHub remote, existing CI, and local lint/build status before changing the product. Evidence: curl https://loopledger.vercel.app, git remote, npm run lint, npm run build.
+1. Jul 1, 2026, 5:46 PM - plan/verified: Confirmed Season 3 loop rules and repository baseline. After the hackathon window opened, Codex verified the GitHub remote, existing CI, local lint/build status, and intended live URL before changing the product. Evidence: git remote, npm run lint, npm run build, curl https://loopledger.vercel.app.
 2. Jul 1, 2026, 5:48 PM - failure/resolved: Found missing committed LOOP.md evidence. The app could export markdown, but the public repository did not yet carry the required agent-written LOOP.md artifact for judges to inspect. Evidence: Repository root scan before this change.
 3. Jul 1, 2026, 5:52 PM - fix/verified: Added readiness checks and stronger LOOP.md timeline export. Codex added a submission readiness panel, replaced first-run demo data with a truthful hackathon starter ledger, and expanded the export with one-line agent loop iterations. Evidence: commit: feat: harden hackathon loop evidence.
+4. Jul 1, 2026, 5:58 PM - decision/in-progress: Changed live target to GitHub Pages after Vercel alias mismatch. Codex found that loopledger.vercel.app served an unrelated Next.js crochet tracker, so LoopLedger now targets the GitHub Pages URL and includes a Pages deployment workflow for the public repository. Evidence: curl https://loopledger.vercel.app returned crochet metadata; .github/workflows/pages.yml.
 
 ## TestSprite CLI Runs
 
 Summary: 0/0 passing, 0.00 credits tracked.
 
-No CLI runs recorded yet. The next iteration should run the TestSprite CLI against https://loopledger.vercel.app after this deployment lands, then record the failure, fix, and rerun evidence here.
+No CLI runs recorded yet. The next iteration should run the TestSprite CLI against https://jerrynee.github.io/LoopLedger/ after the Pages deployment lands, then record the failure, fix, and rerun evidence here.
 
 ## Evidence Ledger
 
@@ -43,9 +45,9 @@ No CLI runs recorded yet. The next iteration should run the TestSprite CLI again
 - Kind: plan
 - Status: verified
 - Captured: Jul 1, 2026, 5:46 PM
-- Evidence: curl https://loopledger.vercel.app, git remote, npm run lint, npm run build
+- Evidence: git remote, npm run lint, npm run build, curl https://loopledger.vercel.app
 
-After the hackathon window opened, Codex verified the live Vercel URL, GitHub remote, existing CI, and local lint/build status before changing the product.
+After the hackathon window opened, Codex verified the GitHub remote, existing CI, local lint/build status, and intended live URL before changing the product.
 
 ### Found missing committed LOOP.md evidence
 
@@ -64,6 +66,15 @@ The app could export markdown, but the public repository did not yet carry the r
 - Evidence: commit: feat: harden hackathon loop evidence
 
 Codex added a submission readiness panel, replaced first-run demo data with a truthful hackathon starter ledger, and expanded the export with one-line agent loop iterations.
+
+### Changed live target to GitHub Pages after Vercel alias mismatch
+
+- Kind: decision
+- Status: in-progress
+- Captured: Jul 1, 2026, 5:58 PM
+- Evidence: curl https://loopledger.vercel.app returned crochet metadata; .github/workflows/pages.yml
+
+Codex found that loopledger.vercel.app served an unrelated Next.js crochet tracker, so LoopLedger now targets the GitHub Pages URL and includes a Pages deployment workflow for the public repository.
 
 ## Final Notes
 

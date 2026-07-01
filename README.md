@@ -16,7 +16,7 @@ The project is designed for TestSprite Hackathon Season 3, where the important a
 
 ## Submission Links
 
-- Live app: <https://loopledger.vercel.app>
+- Live app: <https://jerrynee.github.io/LoopLedger/>
 - Repository: <https://github.com/JerryNee/LoopLedger>
 - Loop artifact: [`LOOP.md`](./LOOP.md)
 
@@ -48,13 +48,14 @@ npm run build
 
 ## Deployment
 
-The TestSprite CLI flow expects a live deployed app. A simple deployment path is:
+The TestSprite CLI flow expects a live deployed app. This repository includes a GitHub Pages workflow:
 
 1. Push this repository to GitHub.
-2. Import it into Vercel, Netlify, or another static host.
-3. Use the deployed URL as the `Live app URL` inside LoopLedger.
-4. Run the TestSprite CLI against that deployed URL.
-5. Record each run and export the final `LOOP.md`.
+2. Make the repository public for hackathon judging.
+3. Enable GitHub Pages with GitHub Actions as the source if it is not already enabled.
+4. Use `https://jerrynee.github.io/LoopLedger/` as the `Live app URL` inside LoopLedger.
+5. Run the TestSprite CLI against that deployed URL.
+6. Record each run and export the final `LOOP.md`.
 
 ## Suggested TestSprite Loop
 

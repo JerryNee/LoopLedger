@@ -3,10 +3,10 @@ import type { LedgerState } from './types';
 export const starterState: LedgerState = {
   project: {
     name: 'LoopLedger',
-    liveUrl: 'https://loopledger.vercel.app',
+    liveUrl: 'https://jerrynee.github.io/LoopLedger/',
     repoUrl: 'https://github.com/JerryNee/LoopLedger',
     testCommand:
-      'testsprite test run <test-id> --target-url https://loopledger.vercel.app --wait --output json',
+      'testsprite test run <test-id> --target-url https://jerrynee.github.io/LoopLedger/ --wait --output json',
     submissionGoal:
       'Use TestSprite CLI failures and reruns to prove LoopLedger was hardened through an agent-led QA loop.',
   },
@@ -47,8 +47,8 @@ export const starterState: LedgerState = {
       status: 'verified',
       title: 'Confirmed Season 3 loop rules and repository baseline',
       detail:
-        'After the hackathon window opened, Codex verified the live Vercel URL, GitHub remote, existing CI, and local lint/build status before changing the product.',
-      evidence: 'curl https://loopledger.vercel.app, git remote, npm run lint, npm run build',
+        'After the hackathon window opened, Codex verified the GitHub remote, existing CI, local lint/build status, and intended live URL before changing the product.',
+      evidence: 'git remote, npm run lint, npm run build, curl https://loopledger.vercel.app',
       linkedRequirementId: 'req-loop-md',
       createdAt: '2026-07-01T22:46:00.000Z',
     },
@@ -74,15 +74,26 @@ export const starterState: LedgerState = {
       linkedRequirementId: 'req-readiness',
       createdAt: '2026-07-01T22:52:00.000Z',
     },
+    {
+      id: 'entry-deploy-001',
+      kind: 'decision',
+      status: 'in-progress',
+      title: 'Changed live target to GitHub Pages after Vercel alias mismatch',
+      detail:
+        'Codex found that loopledger.vercel.app served an unrelated Next.js crochet tracker, so LoopLedger now targets the GitHub Pages URL and includes a Pages deployment workflow for the public repository.',
+      evidence: 'curl https://loopledger.vercel.app returned crochet metadata; .github/workflows/pages.yml',
+      linkedRequirementId: 'req-cli',
+      createdAt: '2026-07-01T22:58:00.000Z',
+    },
   ],
 };
 
 export const demoState: LedgerState = {
   project: {
     name: 'LoopLedger',
-    liveUrl: 'https://loopledger.vercel.app',
+    liveUrl: 'https://jerrynee.github.io/LoopLedger/',
     repoUrl: 'https://github.com/JerryNee/LoopLedger',
-    testCommand: 'testsprite test run <test-id> --target-url https://loopledger.vercel.app --wait --output json',
+    testCommand: 'testsprite test run <test-id> --target-url https://jerrynee.github.io/LoopLedger/ --wait --output json',
     submissionGoal:
       'Prove that the agent used TestSprite CLI failures and reruns to harden the final web app.',
   },
@@ -121,8 +132,8 @@ export const demoState: LedgerState = {
       requirementId: 'req-export',
       label: 'Export preview smoke',
       command:
-        'testsprite test run test_export_preview --target-url https://loopledger.vercel.app --wait --output json',
-      targetUrl: 'https://loopledger.vercel.app',
+        'testsprite test run test_export_preview --target-url https://jerrynee.github.io/LoopLedger/ --wait --output json',
+      targetUrl: 'https://jerrynee.github.io/LoopLedger/',
       status: 'failed',
       durationSec: 184,
       credits: 0.6,
@@ -134,8 +145,8 @@ export const demoState: LedgerState = {
       requirementId: 'req-export',
       label: 'Export preview rerun',
       command:
-        'testsprite test rerun test_export_preview --target-url https://loopledger.vercel.app --wait --output json',
-      targetUrl: 'https://loopledger.vercel.app',
+        'testsprite test rerun test_export_preview --target-url https://jerrynee.github.io/LoopLedger/ --wait --output json',
+      targetUrl: 'https://jerrynee.github.io/LoopLedger/',
       status: 'passed',
       durationSec: 126,
       credits: 0.2,

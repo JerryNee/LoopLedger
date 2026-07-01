@@ -19,6 +19,9 @@ export function getReadinessItems(state: LedgerState, markdown = ''): ReadinessI
     entryKinds.has('failure') && (entryKinds.has('fix') || entryKinds.has('rerun'));
   const testSpriteRuns = state.runs.filter(run => run.command.toLowerCase().includes('testsprite'));
   const hasExportableLoop = state.entries.length > 0 && (markdown.length === 0 || markdown.length > 800);
+  const externalAccessConfirmed = state.entries.some(entry =>
+    `${entry.title} ${entry.detail} ${entry.evidence}`.toLowerCase().includes('external access confirmed'),
+  );
 
   return [
     {
@@ -29,12 +32,20 @@ export function getReadinessItems(state: LedgerState, markdown = ''): ReadinessI
     },
     {
       id: 'repo-url',
-      label: 'Public repository',
+      label: 'Repository URL',
       status:
         hasHttpUrl(state.project.repoUrl) && state.project.repoUrl.includes('github.com')
           ? 'ready'
           : 'attention',
-      detail: state.project.repoUrl || 'Add the GitHub repository URL.',
+      detail: state.project.repoUrl || 'Add the GitHub repository URL before submission.',
+    },
+    {
+      id: 'external-access',
+      label: 'External access',
+      status: externalAccessConfirmed ? 'ready' : 'attention',
+      detail: externalAccessConfirmed
+        ? 'Unauthenticated access to the repo and live app has been confirmed.'
+        : 'Confirm the repo is public and the live page resolves before submitting.',
     },
     {
       id: 'cli-command',
@@ -78,7 +89,7 @@ export function getReadinessItems(state: LedgerState, markdown = ''): ReadinessI
       id: 'ci',
       label: 'CI/CD bonus',
       status: 'ready',
-      detail: 'GitHub Actions runs lint and build on push and pull request.',
+      detail: 'GitHub Actions runs lint, build, and Pages deployment workflows.',
     },
   ];
 }

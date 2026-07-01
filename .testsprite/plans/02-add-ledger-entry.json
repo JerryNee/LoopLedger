@@ -1,0 +1,37 @@
+{
+  "projectId": "9a0f2053-4ee8-409d-bc24-9b339f6e7593",
+  "type": "frontend",
+  "name": "Adding evidence creates a ledger row and updates LOOP.md preview",
+  "description": "When a builder adds a manual evidence entry, the new entry should appear in the ledger and be reflected in the generated LOOP.md preview.",
+  "priority": "p0",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to the LoopLedger live app"
+    },
+    {
+      "type": "action",
+      "description": "In the evidence entry form, enter the title TestSprite smoke evidence"
+    },
+    {
+      "type": "action",
+      "description": "Enter the detail This entry proves the ledger form can capture manual evidence during the hackathon loop"
+    },
+    {
+      "type": "action",
+      "description": "Enter the evidence value testsprite-manual-smoke"
+    },
+    {
+      "type": "action",
+      "description": "Submit the evidence entry"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the ledger timeline shows TestSprite smoke evidence"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the LOOP.md live preview includes TestSprite smoke evidence"
+    }
+  ]
+}

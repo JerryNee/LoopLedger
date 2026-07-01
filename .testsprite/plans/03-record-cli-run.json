@@ -1,0 +1,45 @@
+{
+  "projectId": "9a0f2053-4ee8-409d-bc24-9b339f6e7593",
+  "type": "frontend",
+  "name": "Recording a CLI run creates run evidence",
+  "description": "When a builder records a TestSprite CLI run, the app should show the run in the CLI runs view and create linked evidence for the loop.",
+  "priority": "p1",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to the LoopLedger live app"
+    },
+    {
+      "type": "action",
+      "description": "Open the CLI runs view"
+    },
+    {
+      "type": "action",
+      "description": "In the CLI run form, enter the label TestSprite first cloud run"
+    },
+    {
+      "type": "action",
+      "description": "Enter the command testsprite test create --plan-from .testsprite/plans/01-default-workspace.json --run --wait --output json"
+    },
+    {
+      "type": "action",
+      "description": "Set the run status to passed"
+    },
+    {
+      "type": "action",
+      "description": "Enter the notes Cloud run evidence recorded from the TestSprite CLI loop"
+    },
+    {
+      "type": "action",
+      "description": "Submit the CLI run"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the recorded CLI runs section shows TestSprite first cloud run"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the recorded CLI run shows the passed status"
+    }
+  ]
+}

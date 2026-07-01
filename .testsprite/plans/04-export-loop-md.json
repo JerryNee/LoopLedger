@@ -1,0 +1,29 @@
+{
+  "projectId": "9a0f2053-4ee8-409d-bc24-9b339f6e7593",
+  "type": "frontend",
+  "name": "Export view exposes the judge-readable LOOP.md artifact",
+  "description": "When a builder opens the export view, the generated markdown should present the submission context, readiness checklist, agent loop timeline, and evidence ledger for judges.",
+  "priority": "p1",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to the LoopLedger live app"
+    },
+    {
+      "type": "action",
+      "description": "Open the LOOP.md export view"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the export view heading says Export LOOP.md"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the export preview includes Submission Context, Submission Readiness, Agent Loop Timeline, and Evidence Ledger sections"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify Copy and Download actions are available in the export view"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "projectId": "9a0f2053-4ee8-409d-bc24-9b339f6e7593",
+  "type": "frontend",
+  "name": "Default workspace shows submission readiness and LOOP.md preview",
+  "description": "When a visitor opens LoopLedger for the first time, the workspace should show the project identity, submission readiness checklist, and generated LOOP.md preview without requiring setup.",
+  "priority": "p0",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to the LoopLedger live app"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the workspace header identifies the project as LoopLedger"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the submission readiness section shows the final post checklist with live app URL, repository URL, external access, and CLI run evidence items"
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the LOOP.md live preview includes Submission Readiness and Agent Loop Timeline sections"
+    }
+  ]
+}

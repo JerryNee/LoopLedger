@@ -6,7 +6,7 @@ export const starterState: LedgerState = {
     liveUrl: 'https://jerrynee.github.io/LoopLedger/',
     repoUrl: 'https://github.com/JerryNee/LoopLedger',
     testCommand:
-      'testsprite test run <test-id> --target-url https://jerrynee.github.io/LoopLedger/ --wait --output json',
+      'testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json',
     submissionGoal:
       'Use TestSprite CLI failures and reruns to prove LoopLedger was hardened through an agent-led QA loop.',
   },
@@ -34,12 +34,69 @@ export const starterState: LedgerState = {
       title: 'Record real TestSprite CLI runs against the deployed app',
       owner: 'Builder',
       priority: 'P0',
-      status: 'planned',
+      status: 'verified',
       acceptance:
-        'After deployment, each TestSprite run records the command, target URL, outcome, notes, and follow-up fix or rerun.',
+        'Four TestSprite cloud frontend runs passed against the deployed GitHub Pages app and are recorded with test ids, run ids, commands, target URL, status, duration, and credits.',
     },
   ],
-  runs: [],
+  runs: [
+    {
+      id: '7aad0a87-61f5-48e8-ab25-d88d4de1383e',
+      requirementId: 'req-cli',
+      label: 'Default workspace readiness and LOOP.md preview',
+      command:
+        'testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json',
+      targetUrl: 'https://jerrynee.github.io/LoopLedger/',
+      status: 'passed',
+      durationSec: 84,
+      credits: 2,
+      notes:
+        'Passed. Test id 4ef99732-d5c6-47e0-bae7-cf8d85d757dd verified the default workspace, readiness checklist, and LOOP.md preview.',
+      createdAt: '2026-07-01T23:28:04.924Z',
+    },
+    {
+      id: '1a318e13-b289-44db-97ba-46549601e863',
+      requirementId: 'req-cli',
+      label: 'Manual evidence entry updates ledger and LOOP.md',
+      command:
+        'testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json',
+      targetUrl: 'https://jerrynee.github.io/LoopLedger/',
+      status: 'passed',
+      durationSec: 171,
+      credits: 2,
+      notes:
+        'Passed. Test id d51164fa-c4ee-4392-aed4-408348a8ad96 added evidence through the form and observed it in the ledger and LOOP.md preview.',
+      createdAt: '2026-07-01T23:29:32.506Z',
+    },
+    {
+      id: 'e325e7f6-b2d6-4cdb-9039-60826624c4fd',
+      requirementId: 'req-cli',
+      label: 'CLI run recording creates run evidence',
+      command:
+        'testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json',
+      targetUrl: 'https://jerrynee.github.io/LoopLedger/',
+      status: 'passed',
+      durationSec: 271,
+      credits: 2,
+      notes:
+        'Passed. Test id 84bb4d00-5be9-4c32-82e5-9fbe87078d97 recorded a CLI run in the app and verified the passed status.',
+      createdAt: '2026-07-01T23:31:12.224Z',
+    },
+    {
+      id: '7c23e2e3-d4cc-4d71-9988-482a5ff5bb46',
+      requirementId: 'req-cli',
+      label: 'Export view exposes judge-readable LOOP.md',
+      command:
+        'testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json',
+      targetUrl: 'https://jerrynee.github.io/LoopLedger/',
+      status: 'passed',
+      durationSec: 353,
+      credits: 2,
+      notes:
+        'Passed. Test id 84094177-45a3-4f82-82c1-c23ec68a76b7 verified the Export LOOP.md view, sections, copy action, and download action.',
+      createdAt: '2026-07-01T23:32:34.158Z',
+    },
+  ],
   entries: [
     {
       id: 'entry-start-001',
@@ -96,6 +153,18 @@ export const starterState: LedgerState = {
         'GitHub API visibility public; raw LOOP.md accessible; Pages run 28553664509 success; curl https://jerrynee.github.io/LoopLedger/ returned 200',
       linkedRequirementId: 'req-cli',
       createdAt: '2026-07-01T23:08:00.000Z',
+    },
+    {
+      id: 'entry-testsprite-suite-001',
+      kind: 'test',
+      status: 'verified',
+      title: 'Ran first TestSprite cloud suite against LoopLedger',
+      detail:
+        'Codex created a TestSprite frontend project and ran four cloud browser plans against the deployed GitHub Pages app. All four passed: default workspace readiness, manual evidence capture, CLI run recording, and LOOP.md export.',
+      evidence:
+        'project 9a0f2053-4ee8-409d-bc24-9b339f6e7593; runs 7aad0a87-61f5-48e8-ab25-d88d4de1383e, 1a318e13-b289-44db-97ba-46549601e863, e325e7f6-b2d6-4cdb-9039-60826624c4fd, 7c23e2e3-d4cc-4d71-9988-482a5ff5bb46; 4/4 passed; 8 credits used',
+      linkedRequirementId: 'req-cli',
+      createdAt: '2026-07-01T23:32:34.000Z',
     },
   ],
 };

@@ -89,7 +89,7 @@ export function getReadinessItems(state: LedgerState, markdown = ''): ReadinessI
       id: 'ci',
       label: 'CI/CD bonus',
       status: 'ready',
-      detail: 'GitHub Actions builds, deploys Pages, and can rerun the saved TestSprite checker suite.',
+      detail: 'GitHub Actions builds, deploys Pages, and has rerun the saved TestSprite checker suite successfully.',
     },
   ];
 }

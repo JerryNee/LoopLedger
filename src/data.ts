@@ -178,6 +178,18 @@ export const starterState: LedgerState = {
       linkedRequirementId: 'req-readiness',
       createdAt: '2026-07-02T00:44:32.000Z',
     },
+    {
+      id: 'entry-ci-checker-001',
+      kind: 'test',
+      status: 'verified',
+      title: 'Verified TestSprite checker workflow in GitHub Actions',
+      detail:
+        'Codex configured the GitHub Actions TESTSPRITE_API_KEY secret, manually dispatched the TestSprite Checker workflow, and confirmed the CI job configured the CLI, reran the saved cloud suite, uploaded the result artifact, and finished successfully.',
+      evidence:
+        'GitHub Actions run 28557891464; testsprite-result artifact summary: 4 passed, 0 failed, 0 deferred, total 4.',
+      linkedRequirementId: 'req-cli',
+      createdAt: '2026-07-02T01:02:00.000Z',
+    },
   ],
 };
 

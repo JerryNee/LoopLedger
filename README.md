@@ -24,7 +24,7 @@ It answers the judging questions quickly:
 - Repository: <https://github.com/JerryNee/LoopLedger>
 - Loop artifact: [`LOOP.md`](./LOOP.md)
 - TestSprite cloud suite: 4/4 runs passed against the deployed app.
-- CI/CD: lint/build and GitHub Pages deploy workflows are active; `.github/workflows/testsprite.yml` reruns the saved TestSprite checker when `TESTSPRITE_API_KEY` is configured as a GitHub Actions secret.
+- CI/CD: lint/build, GitHub Pages deploy, and TestSprite checker workflows are active. TestSprite Checker run `28557891464` reran the saved cloud suite from GitHub Actions and passed 4/4.
 - Demo script: [`docs/demo-script.md`](./docs/demo-script.md)
 
 ## What It Does
@@ -84,7 +84,13 @@ The TestSprite CLI flow expects a live deployed app. This repository includes a 
 
 The optional hackathon CI/CD bonus is supported by `.github/workflows/testsprite.yml`.
 
-The workflow runs after the GitHub Pages deployment workflow succeeds. When the repository has a `TESTSPRITE_API_KEY` secret, it configures the CLI and reruns the saved TestSprite project checks. If any rerun fails, the workflow fails.
+The workflow runs after the GitHub Pages deployment workflow succeeds. With the repository `TESTSPRITE_API_KEY` secret configured, it configures the CLI and reruns the saved TestSprite project checks. If any rerun fails, the workflow fails.
+
+Verified CI checker evidence:
+
+- GitHub Actions run: `28557891464`
+- Result artifact: `testsprite-result`
+- Summary: 4 passed, 0 failed, 0 deferred, total 4
 
 ## Suggested TestSprite Loop
 

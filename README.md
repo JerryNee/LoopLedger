@@ -1,8 +1,31 @@
 # LoopLedger
 
-LoopLedger is an evidence workspace for agent-built projects that use TestSprite CLI loops. It helps a builder track requirements, CLI test runs, failures, fixes, reruns, and submission notes in one place, then export a judge-readable `LOOP.md`.
+LoopLedger turns TestSprite CLI runs into a judge-readable `LOOP.md`.
+
+It is an evidence workspace for agent-built projects: a builder records requirements, TestSprite cloud runs, failures, fixes, reruns, and submission notes in one place, then exports the proof judges read first.
 
 The project is designed for TestSprite Hackathon Season 3, where the important artifact is not only the final app, but the visible loop: plan, test, observe, fix, rerun, and document.
+
+## 10-Second Explanation
+
+If Codex or Claude Code builds the app, TestSprite is the checker. LoopLedger is the audit desk between them.
+
+It answers the judging questions quickly:
+
+- What did the agent try to build?
+- What did TestSprite actually test against the live app?
+- What broke or changed during the loop?
+- Which fixes and reruns are backed by evidence?
+- Is the final `LOOP.md` ready to submit?
+
+## Current Submission Evidence
+
+- Live app: <https://jerrynee.github.io/LoopLedger/>
+- Repository: <https://github.com/JerryNee/LoopLedger>
+- Loop artifact: [`LOOP.md`](./LOOP.md)
+- TestSprite cloud suite: 4/4 runs passed against the deployed app.
+- CI/CD: lint/build and GitHub Pages deploy workflows are active; `.github/workflows/testsprite.yml` reruns the saved TestSprite checker when `TESTSPRITE_API_KEY` is configured as a GitHub Actions secret.
+- Demo script: [`docs/demo-script.md`](./docs/demo-script.md)
 
 ## What It Does
 
@@ -13,12 +36,6 @@ The project is designed for TestSprite Hackathon Season 3, where the important a
 - Generates a structured `LOOP.md` preview with readiness checks and one-line agent loop iterations.
 - Shows a final submission checklist for the live URL, public repo, CLI command, run evidence, failure/fix loop, export, and CI/CD bonus.
 - Stores work locally in the browser so the workspace survives refreshes.
-
-## Submission Links
-
-- Live app: <https://jerrynee.github.io/LoopLedger/>
-- Repository: <https://github.com/JerryNee/LoopLedger>
-- Loop artifact: [`LOOP.md`](./LOOP.md)
 
 ## Why It Exists
 
@@ -46,6 +63,12 @@ npm run lint
 npm run build
 ```
 
+To rerun the saved TestSprite cloud checker locally:
+
+```bash
+npx --yes @testsprite/testsprite-cli@latest test rerun --all --project 9a0f2053-4ee8-409d-bc24-9b339f6e7593 --wait --timeout 900 --max-concurrency 2 --output json
+```
+
 ## Deployment
 
 The TestSprite CLI flow expects a live deployed app. This repository includes a GitHub Pages workflow:
@@ -56,6 +79,12 @@ The TestSprite CLI flow expects a live deployed app. This repository includes a 
 4. Use `https://jerrynee.github.io/LoopLedger/` as the `Live app URL` inside LoopLedger.
 5. Run the TestSprite CLI against that deployed URL.
 6. Record each run and export the final `LOOP.md`.
+
+## CI/CD Checker
+
+The optional hackathon CI/CD bonus is supported by `.github/workflows/testsprite.yml`.
+
+The workflow runs after the GitHub Pages deployment workflow succeeds. When the repository has a `TESTSPRITE_API_KEY` secret, it configures the CLI and reruns the saved TestSprite project checks. If any rerun fails, the workflow fails.
 
 ## Suggested TestSprite Loop
 
@@ -70,4 +99,4 @@ The TestSprite CLI flow expects a live deployed app. This repository includes a 
 
 ## Current Status
 
-This repository contains the product shell, data model, local persistence, readiness checklist, ledger workflow, CLI run tracking, markdown export, committed `LOOP.md`, and CI build verification. The next step is to run the real TestSprite CLI pass against the deployed app, record the failures/fixes/reruns, and let that evidence shape the final Discord submission.
+This repository contains the product shell, data model, local persistence, readiness checklist, ledger workflow, CLI run tracking, markdown export, committed `LOOP.md`, TestSprite cloud run evidence, GitHub Pages deployment, and a TestSprite checker workflow for CI/CD reruns.

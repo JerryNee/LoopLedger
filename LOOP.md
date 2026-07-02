@@ -5,7 +5,7 @@
 - Live URL: https://jerrynee.github.io/LoopLedger/
 - Repository: https://github.com/JerryNee/LoopLedger
 - Primary CLI command: `testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json`
-- Goal: Use TestSprite CLI failures and reruns to prove LoopLedger was hardened through an agent-led QA loop.
+- Goal: Turn the TestSprite CLI build loop into a judge-readable evidence packet: live app, public repo, run history, failure/fix trail, and LOOP.md.
 
 ## Submission Readiness
 
@@ -14,15 +14,15 @@
 - [x] External access: Unauthenticated access to the repo and live app has been confirmed.
 - [x] Primary CLI command: testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json
 - [x] Requirements: 3 requirements captured.
-- [x] CLI run evidence: 4 TestSprite cloud runs passed against the live app.
+- [x] CLI run evidence: 4 TestSprite cloud runs recorded against the live app.
 - [x] Failure/fix loop: Failure and fix evidence are linked in the ledger.
 - [x] LOOP.md export: Agent loop timeline and detailed evidence are exportable.
-- [x] CI/CD bonus: GitHub Actions runs lint, build, and Pages deployment workflows.
+- [x] CI/CD bonus: GitHub Actions builds, deploys Pages, and can rerun the saved TestSprite checker suite.
 
 ## Requirements
 
-- [ ] P0 Keep an agent-written LOOP.md in the repo and app export (implemented)
-- [ ] P0 Show submission readiness before the final Discord post (implemented)
+- [x] P0 Keep an agent-written LOOP.md in the repo and app export (verified)
+- [x] P0 Show submission readiness before the final Discord post (verified)
 - [x] P0 Record real TestSprite CLI runs against the deployed app (verified)
 
 ## Agent Loop Timeline
@@ -33,6 +33,7 @@
 4. Jul 1, 2026, 5:58 PM - decision/verified: Changed live target to GitHub Pages after Vercel alias mismatch. Codex found that loopledger.vercel.app served an unrelated Next.js crochet tracker, so LoopLedger now targets the GitHub Pages URL and includes a Pages deployment workflow for the public repository. Evidence: curl https://loopledger.vercel.app returned crochet metadata; .github/workflows/pages.yml.
 5. Jul 1, 2026, 6:08 PM - decision/verified: External access confirmed for repo and live app. Codex made the GitHub repository public, enabled GitHub Pages with workflow deployment, dispatched the Pages build, and confirmed unauthenticated access to both the repo and the live LoopLedger page. Evidence: GitHub API visibility public; raw LOOP.md accessible; Pages run 28553664509 success; curl https://jerrynee.github.io/LoopLedger/ returned 200.
 6. Jul 1, 2026, 6:32 PM - test/verified: Ran first TestSprite cloud suite against LoopLedger. Codex created a TestSprite frontend project and ran four cloud browser plans against the deployed GitHub Pages app. All four passed: default workspace readiness, manual evidence capture, CLI run recording, and LOOP.md export. Evidence: project 9a0f2053-4ee8-409d-bc24-9b339f6e7593; runs 7aad0a87-61f5-48e8-ab25-d88d4de1383e, 1a318e13-b289-44db-97ba-46549601e863, e325e7f6-b2d6-4cdb-9039-60826624c4fd, 7c23e2e3-d4cc-4d71-9988-482a5ff5bb46; 4/4 passed; 8 credits used.
+7. Jul 1, 2026, 7:44 PM - fix/verified: Clarified the judge-facing story and wired TestSprite checker CI. Codex added a first-screen summary explaining that LoopLedger turns TestSprite CLI verdicts into a judge-readable LOOP.md packet, refreshed the README/current status, and added a GitHub Actions checker workflow that reruns the saved TestSprite cloud suite when the repository secret is configured. Evidence: UI briefing panel; README current status; .github/workflows/testsprite.yml; docs/demo-script.md.
 
 ## TestSprite CLI Runs
 
@@ -130,6 +131,15 @@ Codex made the GitHub repository public, enabled GitHub Pages with workflow depl
 
 Codex created a TestSprite frontend project and ran four cloud browser plans against the deployed GitHub Pages app. All four passed: default workspace readiness, manual evidence capture, CLI run recording, and LOOP.md export.
 
+### Clarified the judge-facing story and wired TestSprite checker CI
+
+- Kind: fix
+- Status: verified
+- Captured: Jul 1, 2026, 7:44 PM
+- Evidence: UI briefing panel; README current status; .github/workflows/testsprite.yml; docs/demo-script.md
+
+Codex added a first-screen summary explaining that LoopLedger turns TestSprite CLI verdicts into a judge-readable LOOP.md packet, refreshed the README/current status, and added a GitHub Actions checker workflow that reruns the saved TestSprite cloud suite when the repository secret is configured.
+
 ## Final Notes
 
-This file is agent-written and now includes the first real TestSprite CLI loop. Future feature changes should rerun the relevant TestSprite tests and record any failure, fix, and rerun evidence here.
+This file is agent-written and now includes the first real TestSprite CLI loop plus the follow-up clarity and CI/CD checker pass. Future feature changes should rerun the relevant TestSprite tests and record any failure, fix, and rerun evidence here.

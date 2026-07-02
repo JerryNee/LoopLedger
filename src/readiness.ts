@@ -65,7 +65,7 @@ export function getReadinessItems(state: LedgerState, markdown = ''): ReadinessI
       status: testSpriteRuns.length > 0 ? 'ready' : 'attention',
       detail:
         testSpriteRuns.length > 0
-          ? `${testSpriteRuns.length} TestSprite run${testSpriteRuns.length === 1 ? '' : 's'} recorded.`
+          ? `${testSpriteRuns.length} TestSprite cloud run${testSpriteRuns.length === 1 ? '' : 's'} recorded against the live app.`
           : 'Pending until TestSprite CLI is run against the live app.',
     },
     {
@@ -89,7 +89,7 @@ export function getReadinessItems(state: LedgerState, markdown = ''): ReadinessI
       id: 'ci',
       label: 'CI/CD bonus',
       status: 'ready',
-      detail: 'GitHub Actions runs lint, build, and Pages deployment workflows.',
+      detail: 'GitHub Actions builds, deploys Pages, and can rerun the saved TestSprite checker suite.',
     },
   ];
 }

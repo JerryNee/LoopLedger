@@ -206,6 +206,13 @@ button:focus-visible {
   margin-bottom: 18px;
 }
 
+.topbar-subtitle {
+  margin: 6px 0 0;
+  max-width: 58ch;
+  color: var(--ink);
+  font-size: 0.94rem;
+}
+
 .section-label {
   margin: 0 0 4px;
   color: var(--primary-strong);
@@ -303,6 +310,134 @@ p {
 .icon-button {
   width: 36px;
   padding: 0;
+}
+
+.briefing-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.44fr);
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: stretch;
+}
+
+.briefing-copy,
+.submission-packet {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.briefing-copy h2 {
+  max-width: 22ch;
+  font-size: 1.32rem;
+  line-height: 1.18;
+}
+
+.briefing-copy p {
+  max-width: 72ch;
+  margin: 10px 0 0;
+  color: var(--ink);
+}
+
+.proof-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.proof-list span {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.proof-list svg {
+  color: var(--primary-strong);
+}
+
+.submission-packet {
+  display: grid;
+  gap: 12px;
+  background: var(--surface);
+}
+
+.submission-packet > div:first-child {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.submission-packet strong {
+  font-size: 1rem;
+}
+
+.packet-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.packet-status.ready {
+  border: 1px solid oklch(0.78 0.08 150);
+  background: oklch(0.96 0.035 150);
+  color: oklch(0.34 0.1 150);
+}
+
+.packet-status.attention {
+  border: 1px solid oklch(0.82 0.09 76);
+  background: oklch(0.972 0.035 76);
+  color: oklch(0.42 0.1 76);
+}
+
+.submission-packet dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.submission-packet dl > div {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+}
+
+.submission-packet dt {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.submission-packet dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.submission-packet a {
+  color: var(--primary-strong);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .project-strip {
@@ -745,6 +880,10 @@ pre {
     position: static;
     max-height: none;
   }
+
+  .briefing-panel {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 780px) {
@@ -759,6 +898,7 @@ pre {
   }
 
   .project-strip,
+  .briefing-panel,
   .metric-grid,
   .readiness-list,
   .two-column,
@@ -777,6 +917,11 @@ pre {
 
   .segmented {
     width: 100%;
+  }
+
+  .submission-packet dl > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 }
 

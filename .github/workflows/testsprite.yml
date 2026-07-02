@@ -1,0 +1,71 @@
+name: TestSprite Checker
+
+on:
+  workflow_run:
+    workflows: ["Deploy GitHub Pages"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testsprite-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rerun-checker:
+    name: Rerun saved TestSprite suite
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    env:
+      TESTSPRITE_API_KEY: ${{ secrets.TESTSPRITE_API_KEY }}
+      TESTSPRITE_PROJECT_ID: 9a0f2053-4ee8-409d-bc24-9b339f6e7593
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build app
+        run: npm run build -- --mode github-pages
+
+      - name: Skip checker when secret is missing
+        if: ${{ env.TESTSPRITE_API_KEY == '' }}
+        run: |
+          echo "::warning::TESTSPRITE_API_KEY is not configured; skipping TestSprite checker."
+
+      - name: Configure TestSprite CLI
+        if: ${{ env.TESTSPRITE_API_KEY != '' }}
+        run: npx --yes @testsprite/testsprite-cli@latest setup --from-env --no-agent -y
+
+      - name: Rerun saved cloud checks
+        if: ${{ env.TESTSPRITE_API_KEY != '' }}
+        shell: bash
+        run: |
+          set -o pipefail
+          npx --yes @testsprite/testsprite-cli@latest \
+            test rerun --all \
+            --project "$TESTSPRITE_PROJECT_ID" \
+            --wait \
+            --timeout 900 \
+            --max-concurrency 2 \
+            --idempotency-key "loopledger-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --output json | tee testsprite-result.json
+
+      - name: Upload TestSprite result
+        if: ${{ env.TESTSPRITE_API_KEY != '' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: testsprite-result
+          path: testsprite-result.json
+          if-no-files-found: ignore
+

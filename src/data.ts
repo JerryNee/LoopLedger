@@ -8,7 +8,7 @@ export const starterState: LedgerState = {
     testCommand:
       'testsprite test create-batch --plan-from-dir .testsprite/plans --run --wait --target-url https://jerrynee.github.io/LoopLedger/ --timeout 900 --max-concurrency 2 --output json',
     submissionGoal:
-      'Use TestSprite CLI failures and reruns to prove LoopLedger was hardened through an agent-led QA loop.',
+      'Turn the TestSprite CLI build loop into a judge-readable evidence packet: live app, public repo, run history, failure/fix trail, and LOOP.md.',
   },
   requirements: [
     {
@@ -16,7 +16,7 @@ export const starterState: LedgerState = {
       title: 'Keep an agent-written LOOP.md in the repo and app export',
       owner: 'Agent',
       priority: 'P0',
-      status: 'implemented',
+      status: 'verified',
       acceptance:
         'The repository includes LOOP.md and the export produces submission context, readiness checks, one-line loop iterations, CLI runs, and detailed evidence.',
     },
@@ -25,7 +25,7 @@ export const starterState: LedgerState = {
       title: 'Show submission readiness before the final Discord post',
       owner: 'Agent',
       priority: 'P0',
-      status: 'implemented',
+      status: 'verified',
       acceptance:
         'The workspace flags live URL, public repo, CLI command, requirements, run evidence, failure/fix evidence, LOOP.md export, and CI/CD status.',
     },
@@ -165,6 +165,18 @@ export const starterState: LedgerState = {
         'project 9a0f2053-4ee8-409d-bc24-9b339f6e7593; runs 7aad0a87-61f5-48e8-ab25-d88d4de1383e, 1a318e13-b289-44db-97ba-46549601e863, e325e7f6-b2d6-4cdb-9039-60826624c4fd, 7c23e2e3-d4cc-4d71-9988-482a5ff5bb46; 4/4 passed; 8 credits used',
       linkedRequirementId: 'req-cli',
       createdAt: '2026-07-01T23:32:34.000Z',
+    },
+    {
+      id: 'entry-clarity-ci-001',
+      kind: 'fix',
+      status: 'verified',
+      title: 'Clarified the judge-facing story and wired TestSprite checker CI',
+      detail:
+        'Codex added a first-screen summary explaining that LoopLedger turns TestSprite CLI verdicts into a judge-readable LOOP.md packet, refreshed the README/current status, and added a GitHub Actions checker workflow that reruns the saved TestSprite cloud suite when the repository secret is configured.',
+      evidence:
+        'UI briefing panel; README current status; .github/workflows/testsprite.yml; docs/demo-script.md',
+      linkedRequirementId: 'req-readiness',
+      createdAt: '2026-07-02T00:44:32.000Z',
     },
   ],
 };

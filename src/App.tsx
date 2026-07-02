@@ -112,6 +112,7 @@ export default function App() {
     const verifiedRequirements = state.requirements.filter(req => req.status === 'verified').length;
     const credits = state.runs.reduce((sum, run) => sum + run.credits, 0);
     return {
+      passedRuns,
       passRate: state.runs.length === 0 ? 0 : Math.round((passedRuns / state.runs.length) * 100),
       openEntries,
       verifiedRequirements,
@@ -278,15 +279,18 @@ export default function App() {
 
         <div className="sidebar-note">
           <Sparkles size={16} />
-          <p>Track the proof while the agent builds, not after the memory fades.</p>
+          <p>Convert agent work and TestSprite verdicts into the proof judges read first.</p>
         </div>
       </aside>
 
       <section className="workspace">
         <header className="topbar">
           <div>
-            <p className="section-label">Hackathon loop</p>
+            <p className="section-label">TestSprite Season 3</p>
             <h1>{state.project.name}</h1>
+            <p className="topbar-subtitle">
+              Turns TestSprite CLI runs into a judge-readable LOOP.md.
+            </p>
           </div>
           <div className="top-actions">
             <button className="button secondary" onClick={restoreDemo}>
@@ -303,6 +307,14 @@ export default function App() {
             </button>
           </div>
         </header>
+
+        <BriefingPanel
+          state={state}
+          passedRuns={stats.passedRuns}
+          readyCount={readyCount}
+          readyTotal={readinessItems.length}
+          credits={stats.credits}
+        />
 
         <section className="project-strip" aria-label="Project profile">
           <label>
@@ -406,6 +418,77 @@ export default function App() {
         </div>
       </section>
     </main>
+  );
+}
+
+function BriefingPanel(props: {
+  state: LedgerState;
+  passedRuns: number;
+  readyCount: number;
+  readyTotal: number;
+  credits: number;
+}) {
+  const { state, passedRuns, readyCount, readyTotal, credits } = props;
+  const packetReady = readyCount === readyTotal;
+
+  return (
+    <section className="briefing-panel" aria-label="Judge-facing project summary">
+      <div className="briefing-copy">
+        <p className="section-label">What this proves</p>
+        <h2>Agent work, checker results, and submission evidence stay in one ledger.</h2>
+        <p>
+          LoopLedger is the audit workspace for a TestSprite build loop: requirements,
+          cloud CLI verdicts, failures, fixes, reruns, costs, and the final LOOP.md
+          artifact are captured as one reviewable record.
+        </p>
+        <div className="proof-list" aria-label="Loop proof summary">
+          <span><CheckCircle2 size={15} /> Public live app and repo</span>
+          <span><ListChecks size={15} /> {passedRuns}/{state.runs.length} TestSprite runs passed</span>
+          <span><GitBranch size={15} /> Failure and fix trail recorded</span>
+          <span><FileText size={15} /> Exportable LOOP.md</span>
+        </div>
+      </div>
+
+      <aside className="submission-packet" aria-label="Submission packet">
+        <div>
+          <span className={packetReady ? 'packet-status ready' : 'packet-status attention'}>
+            {packetReady ? <CheckCircle2 size={14} /> : <TriangleAlert size={14} />}
+            {packetReady ? 'Ready packet' : 'Needs attention'}
+          </span>
+          <strong>Submission packet</strong>
+        </div>
+        <dl>
+          <div>
+            <dt>Live demo</dt>
+            <dd>
+              {state.project.liveUrl ? (
+                <a href={state.project.liveUrl} target="_blank" rel="noreferrer">
+                  {state.project.liveUrl}
+                </a>
+              ) : 'Not recorded'}
+            </dd>
+          </div>
+          <div>
+            <dt>Repository</dt>
+            <dd>
+              {state.project.repoUrl ? (
+                <a href={state.project.repoUrl} target="_blank" rel="noreferrer">
+                  {state.project.repoUrl}
+                </a>
+              ) : 'Not recorded'}
+            </dd>
+          </div>
+          <div>
+            <dt>Checker evidence</dt>
+            <dd>{passedRuns}/{state.runs.length} passed, {credits.toFixed(2)} credits tracked</dd>
+          </div>
+          <div>
+            <dt>Readiness</dt>
+            <dd>{readyCount}/{readyTotal} checks ready</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
   );
 }
 

@@ -190,6 +190,18 @@ export const starterState: LedgerState = {
       linkedRequirementId: 'req-cli',
       createdAt: '2026-07-02T01:02:00.000Z',
     },
+    {
+      id: 'entry-nav-feedback-001',
+      kind: 'failure',
+      status: 'resolved',
+      title: 'Sidebar navigation looked unresponsive above the fold',
+      detail:
+        'A user clicked the CLI runs navigation item and saw no visible change because the selected workspace panel lived below the project profile, metrics, and readiness sections. Codex changed the navigation handler to scroll and focus the active main panel so the selected view becomes immediately visible on desktop and mobile.',
+      evidence:
+        'Playwright click check: CLI runs scrolled to Runs and requirements on desktop and mobile; aria-current moved to CLI runs; horizontal overflow stayed 0.',
+      linkedRequirementId: 'req-readiness',
+      createdAt: '2026-07-02T02:12:50.000Z',
+    },
   ],
 };
 

@@ -35,6 +35,7 @@
 6. Jul 1, 2026, 6:32 PM - test/verified: Ran first TestSprite cloud suite against LoopLedger. Codex created a TestSprite frontend project and ran four cloud browser plans against the deployed GitHub Pages app. All four passed: default workspace readiness, manual evidence capture, CLI run recording, and LOOP.md export. Evidence: project 9a0f2053-4ee8-409d-bc24-9b339f6e7593; runs 7aad0a87-61f5-48e8-ab25-d88d4de1383e, 1a318e13-b289-44db-97ba-46549601e863, e325e7f6-b2d6-4cdb-9039-60826624c4fd, 7c23e2e3-d4cc-4d71-9988-482a5ff5bb46; 4/4 passed; 8 credits used.
 7. Jul 1, 2026, 7:44 PM - fix/verified: Clarified the judge-facing story and wired TestSprite checker CI. Codex added a first-screen summary explaining that LoopLedger turns TestSprite CLI verdicts into a judge-readable LOOP.md packet, refreshed the README/current status, and added a GitHub Actions checker workflow that reruns the saved TestSprite cloud suite when the repository secret is configured. Evidence: UI briefing panel; README current status; .github/workflows/testsprite.yml; docs/demo-script.md.
 8. Jul 1, 2026, 8:02 PM - test/verified: Verified TestSprite checker workflow in GitHub Actions. Codex configured the GitHub Actions TESTSPRITE_API_KEY secret, manually dispatched the TestSprite Checker workflow, and confirmed the CI job configured the CLI, reran the saved cloud suite, uploaded the result artifact, and finished successfully. Evidence: GitHub Actions run 28557891464; testsprite-result artifact summary: 4 passed, 0 failed, 0 deferred, total 4.
+9. Jul 1, 2026, 9:12 PM - failure/resolved: Sidebar navigation looked unresponsive above the fold. A user clicked the CLI runs navigation item and saw no visible change because the selected workspace panel lived below the project profile, metrics, and readiness sections. Codex changed the navigation handler to scroll and focus the active main panel so the selected view becomes immediately visible on desktop and mobile. Evidence: Playwright click check: CLI runs scrolled to Runs and requirements on desktop and mobile; aria-current moved to CLI runs; horizontal overflow stayed 0.
 
 ## TestSprite CLI Runs
 
@@ -150,6 +151,15 @@ Codex added a first-screen summary explaining that LoopLedger turns TestSprite C
 
 Codex configured the GitHub Actions TESTSPRITE_API_KEY secret, manually dispatched the TestSprite Checker workflow, and confirmed the CI job configured the CLI, reran the saved cloud suite, uploaded the result artifact, and finished successfully.
 
+### Sidebar navigation looked unresponsive above the fold
+
+- Kind: failure
+- Status: resolved
+- Captured: Jul 1, 2026, 9:12 PM
+- Evidence: Playwright click check: CLI runs scrolled to Runs and requirements on desktop and mobile; aria-current moved to CLI runs; horizontal overflow stayed 0.
+
+A user clicked the CLI runs navigation item and saw no visible change because the selected workspace panel lived below the project profile, metrics, and readiness sections. Codex changed the navigation handler to scroll and focus the active main panel so the selected view becomes immediately visible on desktop and mobile.
+
 ## Final Notes
 
-This file is agent-written and now includes the first real TestSprite CLI loop plus the follow-up clarity and verified CI/CD checker pass. Future feature changes should rerun the relevant TestSprite tests and record any failure, fix, and rerun evidence here.
+This file is agent-written and now includes the first real TestSprite CLI loop, the follow-up clarity and verified CI/CD checker pass, and a user-observed navigation failure that was fixed and browser-checked. Future feature changes should rerun the relevant TestSprite tests and record any failure, fix, and rerun evidence here.

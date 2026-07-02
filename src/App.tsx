@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Archive,
   CheckCircle2,
@@ -90,6 +90,7 @@ function statusIcon(status: RunStatus | EntryStatus | RequirementStatus) {
 export default function App() {
   const [state, setState] = useState<LedgerState>(() => loadLedgerState());
   const [view, setView] = useState<ViewMode>('ledger');
+  const contentGridRef = useRef<HTMLDivElement>(null);
   const [entryFilter, setEntryFilter] = useState<EntryKind | 'all'>('all');
   const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle');
   const [requirementDraft, setRequirementDraft] = useState(initialRequirement);
@@ -246,6 +247,20 @@ export default function App() {
     setState(restoreDemoState());
   }
 
+  function selectView(nextView: ViewMode) {
+    setView(nextView);
+    window.requestAnimationFrame(() => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      contentGridRef.current?.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+      contentGridRef.current
+        ?.querySelector<HTMLElement>('.main-panel')
+        ?.focus({ preventScroll: true });
+    });
+  }
+
   return (
     <main className="app-shell">
       <aside className="sidebar" aria-label="Workspace navigation">
@@ -260,17 +275,29 @@ export default function App() {
         </div>
 
         <nav className="nav-list">
-          <button className={view === 'ledger' ? 'nav-item active' : 'nav-item'} onClick={() => setView('ledger')}>
+          <button
+            className={view === 'ledger' ? 'nav-item active' : 'nav-item'}
+            aria-current={view === 'ledger' ? 'page' : undefined}
+            onClick={() => selectView('ledger')}
+          >
             <History size={17} />
             Ledger
             <span>{state.entries.length}</span>
           </button>
-          <button className={view === 'runs' ? 'nav-item active' : 'nav-item'} onClick={() => setView('runs')}>
+          <button
+            className={view === 'runs' ? 'nav-item active' : 'nav-item'}
+            aria-current={view === 'runs' ? 'page' : undefined}
+            onClick={() => selectView('runs')}
+          >
             <ListChecks size={17} />
             CLI runs
             <span>{state.runs.length}</span>
           </button>
-          <button className={view === 'export' ? 'nav-item active' : 'nav-item'} onClick={() => setView('export')}>
+          <button
+            className={view === 'export' ? 'nav-item active' : 'nav-item'}
+            aria-current={view === 'export' ? 'page' : undefined}
+            onClick={() => selectView('export')}
+          >
             <FileText size={17} />
             LOOP.md
             <span>{Math.round(loopMarkdown.length / 100) / 10}k</span>
@@ -301,7 +328,7 @@ export default function App() {
               <Archive size={16} />
               Clear
             </button>
-            <button className="button primary" onClick={() => setView('export')}>
+            <button className="button primary" onClick={() => selectView('export')}>
               <FileText size={16} />
               Export
             </button>
@@ -367,8 +394,8 @@ export default function App() {
 
         <ReadinessPanel items={readinessItems} />
 
-        <div className="content-grid">
-          <section className="main-panel">
+        <div className="content-grid" ref={contentGridRef}>
+          <section className="main-panel" tabIndex={-1}>
             {view === 'ledger' && (
               <LedgerView
                 entries={filteredEntries}

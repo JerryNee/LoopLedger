@@ -564,6 +564,7 @@ label {
   grid-template-columns: minmax(0, 1fr) 390px;
   gap: 14px;
   align-items: start;
+  scroll-margin-top: 20px;
 }
 
 .main-panel,
@@ -576,6 +577,11 @@ label {
 
 .main-panel {
   padding: 16px;
+}
+
+.main-panel:focus {
+  outline: 2px solid oklch(0.74 0.08 205);
+  outline-offset: 3px;
 }
 
 .side-panel {

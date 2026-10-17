@@ -87,9 +87,9 @@ export function getReadinessItems(state: LedgerState, markdown = ''): ReadinessI
     },
     {
       id: 'ci',
-      label: 'CI/CD bonus',
-      status: 'ready',
-      detail: 'GitHub Actions builds, deploys Pages, and has rerun the saved TestSprite checker suite successfully.',
+      label: 'Current PR checks',
+      status: 'attention',
+      detail: 'Historical ledger entries do not verify current CI. Inspect the PR for current check evidence.',
     },
   ];
 }

@@ -20,10 +20,9 @@ function normalizeState(state: LedgerState): LedgerState {
 }
 
 export function loadLedgerState(): LedgerState {
-  const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) return cloneState(starterState);
-
   try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return cloneState(starterState);
     return normalizeState(JSON.parse(raw) as LedgerState);
   } catch {
     return cloneState(starterState);

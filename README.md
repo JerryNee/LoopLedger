@@ -1,10 +1,35 @@
 # LoopLedger
 
-LoopLedger turns TestSprite CLI runs into a judge-readable `LOOP.md`.
+LoopLedger is a public pull-request evidence workspace. Inspect checks on a PR's exact head commit, save local snapshots, and export a reviewable Markdown report.
 
-It is an evidence workspace for agent-built projects: a builder records requirements, TestSprite cloud runs, failures, fixes, reruns, and submission notes in one place, then exports the proof judges read first.
+## Season 4
 
-The project is designed for TestSprite Hackathon Season 3, where the important artifact is not only the final app, but the visible loop: plan, test, observe, fix, rerun, and document.
+This existing Season 3 project is being extended for TestSprite Hackathon Season 4. The PR workspace is now the default screen; the earlier ledger, CLI runs, and `LOOP.md` editor remain available as historical/manual records.
+
+**Status:** local checks pass. Hosted TestSprite testing and the GitHub App integration are still pending. This repository does not yet claim a qualifying Season 4 PR check. See [the Season 4 work log](docs/season4.md).
+
+### PR Evidence
+
+- Retrieves public GitHub check runs and commit statuses for the observed head SHA.
+- Keeps the newest attempt per check name and publisher, including pending reruns.
+- Separates missing, pending, failed, passed, and unverified results. Skipped and neutral do not count as passes.
+- Links TestSprite bot comments without interpreting them as a passing check.
+- Re-reads the PR head before saving, rejecting evidence collected during a new push.
+- Saves up to 20 snapshots in this browser and exports Markdown with source links.
+
+No GitHub token, account, or backend is required. Requests go directly to GitHub's public REST API. Unauthenticated rate limits apply; failed requests leave the previous snapshot intact. Private repositories are unsupported.
+
+### Evidence Limits
+
+This is an inspection aid, not a merge gate. TestSprite results are recognized by check/app labels, not authenticated publisher identity. Branch protection, required checks, deployment identity, and test coverage require separate verification. Local history is editable and not a signed audit log. A saved pass does not establish that the PR still passes now.
+
+### AI Disclosure
+
+Code, tests, and documentation were developed with OpenAI Codex assistance. Reported outcomes are observed executions, not generated demonstrations. No failures were planted to create a hackathon narrative.
+
+## Season 3 Archive
+
+**Everything below describes the earlier version. The July 2026 results do not verify the Season 4 interface or establish the new GitHub App integration.**
 
 ## 10-Second Explanation
 
@@ -18,7 +43,7 @@ It answers the judging questions quickly:
 - Which fixes and reruns are backed by evidence?
 - Is the final `LOOP.md` ready to submit?
 
-## Current Submission Evidence
+## Historical Submission Evidence
 
 - Live app: <https://jerrynee.github.io/LoopLedger/>
 - Repository: <https://github.com/JerryNee/LoopLedger>
@@ -60,6 +85,7 @@ http://127.0.0.1:5173/
 
 ```bash
 npm run lint
+npm test
 npm run build
 ```
 
@@ -103,6 +129,6 @@ Verified CI checker evidence:
 7. Redeploy, rerun, and record the result.
 8. Export `LOOP.md` for the final submission.
 
-## Current Status
+## Historical Status
 
 This repository contains the product shell, data model, local persistence, readiness checklist, ledger workflow, CLI run tracking, markdown export, committed `LOOP.md`, TestSprite cloud run evidence, GitHub Pages deployment, and a TestSprite checker workflow for CI/CD reruns.

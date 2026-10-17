@@ -10,7 +10,9 @@ LoopLedger is for builders using coding agents and TestSprite CLI loops during a
 
 ## Product Purpose
 
-LoopLedger organizes the agent QA loop into a visible ledger: requirements, implementation checkpoints, TestSprite CLI runs, failures, fixes, reruns, costs, and final submission notes. Success means a builder can open the app, reconstruct what happened, and export a credible `LOOP.md` without digging through terminal scrollback or scattered notes.
+For Season 4, LoopLedger captures public GitHub PR evidence for the exact observed head commit: checks, statuses, bot-comment links, and locally saved snapshots. Success means a reviewer can distinguish current-commit evidence from historical passes and download a report with explicit limitations. It is not a branch-protection or publisher-identity verifier.
+
+The Season 3 ledger remains available for manually recording requirements, CLI runs, failures, fixes, and `LOOP.md` exports. Those historical records must not imply that a current PR has passed.
 
 ## Brand Personality
 

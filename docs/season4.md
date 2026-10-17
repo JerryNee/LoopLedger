@@ -61,7 +61,7 @@ This is manual cloud verification, **not** a GitHub-triggered suite or a passing
 
 1. Initial deployment is complete. Redeploy the final PR head before collecting integration evidence.
 2. Account confirmed: browser and CLI now use the same original Gmail account. A separate portal-created `LoopLedger S4` project (`28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8`) preserves the old Season 3 suite unchanged. Local configuration now points to S4; the historical checker is manual-only.
-3. In TestSprite Workspace Settings > Connections > Integrations, install/connect its GitHub App for `JerryNee/LoopLedger` only. User authorization is required.
+3. Completed October 17: after explicit user confirmation, TestSprite's GitHub App was installed for `JerryNee/LoopLedger` only. The portal confirmed connection to JerryNee. The existing Vercel GitHub App retained its three prior repositories and added LoopLedger; `vercel git connect` then succeeded.
 4. Portal suite generation and strict cloud replays are complete for the deployed source above. Preserve the reviewed scripts; a fresh AI generation may replace them.
 5. In the project's GitHub Action settings, configure a PR trigger using a successful preview deployment event. Check that the preview corresponds to that PR's source commit. A PR-open event alone is not a deployment.
 6. Observe a real TestSprite bot check/comment on the project PR, fix any genuine failures, and rerun.
@@ -76,8 +76,8 @@ Project deadline advertised: October 22, 2026, 23:59 PT (October 23, 01:59 Chica
 
 ## Handoff Rules
 
-The first S4 portal suite contains eight reviewed cases; see [coverage and fixture details](season4-test-coverage.md). GitHub App installation and adding LoopLedger to the existing Vercel GitHub App are awaiting user authorization. Do not treat prepared but unsaved authorization pages as connected integrations.
+The first S4 portal suite contains eight reviewed cases; see [coverage and fixture details](season4-test-coverage.md). The two repository authorizations have been saved and verified. The next step is a real Git-triggered preview deployment, followed by a deployment-backed TestSprite trigger.
 
-Prepared scopes: TestSprite only `JerryNee/LoopLedger`; Vercel adds only `LoopLedger` while retaining `JerryNee.github.io`, `Immersive_Intelligence`, and `the-room`. Do not accept Vercel's separate pending permission-upgrade request. If TestSprite's OAuth state expires, restart Connect from its workspace integrations page, preserving the same one-repository scope. After authorization, connect Vercel Git, verify an actual public preview and matching source SHA, then configure the TestSprite deployment trigger. Preview authentication has not been changed.
+Saved scopes: TestSprite only `JerryNee/LoopLedger`; Vercel adds only `LoopLedger` while retaining `JerryNee.github.io`, `Immersive_Intelligence`, and `the-room`. Vercel's separate permission-upgrade request was not accepted. Preview authentication is currently enabled (Standard Protection); changing public preview access requires separate user confirmation. Prefer a specific preview-domain exception over disabling project-wide protection.
 
 Never reuse the four Season 3 passes as Season 4 evidence. Never claim GitHub App configuration is complete merely because the old CLI workflow exists. Do not commit API keys, `.env*`, or credential files. Keep source commits, deployment URLs, and test run IDs explicit. Follow `AGENTS.md` for deployed TestSprite verification.

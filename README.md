@@ -4,6 +4,9 @@ LoopLedger is a public pull-request evidence workspace. Inspect checks on a PR's
 
 ## Season 4
 
+- [Live Season 4 app](https://loopledger-s4.vercel.app)
+- [Implementation PR](https://github.com/JerryNee/LoopLedger/pull/1) (draft until hosted testing and integration are verified)
+
 This existing Season 3 project is being extended for TestSprite Hackathon Season 4. The PR workspace is now the default screen; the earlier ledger, CLI runs, and `LOOP.md` editor remain available as historical/manual records.
 
 **Status:** local checks pass. Hosted TestSprite testing and the GitHub App integration are still pending. This repository does not yet claim a qualifying Season 4 PR check. See [the Season 4 work log](docs/season4.md).

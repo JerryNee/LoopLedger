@@ -14,9 +14,20 @@ Started October 16, 2026 (America/Chicago), on `feat/season4-pr-evidence`. Exist
 
 These are local checks, not hosted TestSprite results.
 
+## Deployment and PR
+
+- Live app: https://loopledger-s4.vercel.app
+- Deployment ID: `dpl_CX3UoUpME3t5EFJ2aNdSru3PojeX`.
+- Deployed application source: `2dd85e2f15b73d810a34a02c5cd05bae129d56ee`.
+- PR: https://github.com/JerryNee/LoopLedger/pull/1 (draft).
+- GitHub CI: https://github.com/JerryNee/LoopLedger/actions/runs/38998670067 passed lint, 29 tests, and build.
+- Unauthenticated HTTP access returned 200. Browser verification on the deployed app fetched PR #1, displayed its exact source SHA and passing ordinary CI, and correctly displayed `No TestSprite check`.
+- Vercel CLI deployment succeeded; automatic GitHub repository connection did not. Do not assume preview deployments exist. Connect the repository with appropriate user authorization before configuring an automated deployment-backed TestSprite trigger.
+- Follow-up documentation commits do not alter the deployed JavaScript/CSS. Redeploy the final PR head before attaching commit-specific cloud evidence.
+
 ## Remaining Integration Work
 
-1. Deploy the branch and record the public deployment URL and source commit.
+1. Initial deployment is complete. Redeploy the final PR head before collecting integration evidence.
 2. Confirm the intended TestSprite account. The signed-in browser account differs from the existing CLI account. Do not mix project IDs, credentials, or results across accounts.
 3. In TestSprite Workspace Settings > Connections > Integrations, install/connect its GitHub App for `JerryNee/LoopLedger` only. User authorization is required.
 4. Generate/run the Season 4 browser suite against the deployed app.

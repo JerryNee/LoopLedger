@@ -57,14 +57,14 @@ All eight cases subsequently passed strict cloud replay using CLI `0.14.0` and `
 
 This is manual cloud verification, **not** a GitHub-triggered suite or a passing TestSprite PR check. The portal/CLI account is the user's original Gmail account; 136 free credits remained at the last check. No plan purchase or paid upgrade was made.
 
-## Remaining Integration Work
+## Integration Progress
 
 1. Git preview deployment is working: commit `3747a8c21d55ee05ecf2cb6deda669c302cf1229` produced `dpl_HqJ18ik6Uz3LcGhLGQV2vBRF6LLz` automatically. Its build log confirms the feature branch and commit, and GitHub CI plus the `Vercel` status passed. [Vercel bot comment](https://github.com/JerryNee/LoopLedger/pull/1#issuecomment-6230091756). The preview still requires Vercel login; unauthenticated access returned HTTP 302.
 2. Account confirmed: browser and CLI now use the same original Gmail account. A separate portal-created `LoopLedger S4` project (`28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8`) preserves the old Season 3 suite unchanged. Local configuration now points to S4; the historical checker is manual-only.
 3. Completed October 17: after explicit user confirmation, TestSprite's GitHub App was installed for `JerryNee/LoopLedger` only. The portal confirmed connection to JerryNee. The existing Vercel GitHub App retained its three prior repositories and added LoopLedger; `vercel git connect` then succeeded.
 4. Portal suite generation and strict cloud replays are complete for the deployed source above. Preserve the reviewed scripts; a fresh AI generation may replace them.
-5. Completed October 17: after the user's separate confirmation, the exact branch preview domain was added to Vercel's public-access exceptions. Unauthenticated access returned HTTP 200; project-wide Require Log In remains enabled with Standard Protection. The existing S4 `default` environment now points to this preview. A saved, active Push rule watches `JerryNee/LoopLedger`, branch `feat/season4-pr-evidence`, and the `Vercel` commit status. Use this exact branch scope: Vercel truncated/hashed the long branch name in its alias, so a generic `{branch-slug}` URL pattern would be incorrect. The first automatic run is not yet verified.
-6. Observe a real TestSprite bot check/comment on the project PR, fix any genuine failures, and rerun.
+5. Completed October 17: after the user's separate confirmation, the exact branch preview domain was added to Vercel's public-access exceptions. Unauthenticated access returned HTTP 200; project-wide Require Log In remains enabled with Standard Protection. The existing S4 `default` environment now points to this preview. A saved Push rule watches `JerryNee/LoopLedger`, branch `feat/season4-pr-evidence`, and the `Vercel` commit status. Use this exact branch scope: Vercel truncated/hashed the long branch name in its alias, so a generic `{branch-slug}` URL pattern would be incorrect. The rule was disabled after its first real event was blocked by billing, as recorded below.
+6. Resolve the TestSprite plan entitlement before re-enabling the rule. Then observe actual test executions and a passing check/comment on the project PR, fix any genuine failures, and rerun. Do not upgrade or accept a renewing trial without the user's separate authorization.
 7. Record run IDs, URLs, failures/fixes (if any), and final status here before submission.
 8. Submit the PR link, live URL, and TestSprite account email/name in Discord `#hackathon-submissions` according to the current S4 page. Do not reuse the S3 form instructions. No entry has been submitted yet.
 
@@ -74,9 +74,19 @@ Official references:
 
 Project deadline advertised: October 22, 2026, 23:59 PT (October 23, 01:59 Chicago). CLI contribution window ends October 29. Verify announcements before final submission.
 
+## First Deployment-Triggered Attempt
+
+On October 17, commit `661c578026c74956e2a0de7f87a179f493930997` triggered [GitHub CI](https://github.com/JerryNee/LoopLedger/actions/runs/39006581455) and Vercel deployment `dpl_8NWH7CHEgmHYeZ5WsEQdUtiLxMh3`. Both passed. Vercel's build log confirms this source commit and branch; the application bundles remain `index-XnT-ekCK.js` and `index-ZekMqHO8.css`.
+
+The real `Vercel` success event reached TestSprite. GitHub check `117320216990`, named `TestSprite V3`, completed with failure and the title **GitHub CI runs not on the Free plan. No tests were run.** The portal [trigger activity](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/settings/github-action?delivery=0d2a306c-c9ec-11f1-8f69-963ca8ba8f05) records **Blocked by billing** for that same SHA. Delivery ID: `0d2a306c-c9ec-11f1-8f69-963ca8ba8f05`.
+
+This is a billing/entitlement block, not an application test failure or a test pass. No execution/run IDs were issued. The portal still showed 136 credits. The trigger was disabled, not deleted, to preserve its configuration and avoid repeating the blocked attempt.
+
+The [public pricing page](https://www.testsprite.com/pricing), checked the same day, advertises GitHub PR auto-test on one repository in Free, whereas this branch-based CI trigger was refused. Ask TestSprite whether the distinction is PR versus Push triggers, an account entitlement issue, or a published-plan mismatch, and whether S4 includes the needed access. Do not infer which explanation is correct. Starter's advertised first month is free but then renews at $19/month; no trial, subscription, or purchase was started.
+
 ## Handoff Rules
 
-The first S4 portal suite contains eight reviewed cases; see [coverage and fixture details](season4-test-coverage.md). Repository authorizations, Git preview deployment, and the branch-scoped trigger have been saved and verified. The next step is observing an actual deployment-triggered test run on the new PR head.
+The first S4 portal suite contains eight reviewed cases; see [coverage and fixture details](season4-test-coverage.md). Repository authorizations and Git preview deployment are verified. The branch-scoped trigger is saved but disabled after the billing block above. Resolve that entitlement, re-enable, then verify actual tests against a new deployed PR head. Existing manual replay passes do not establish automatic integration success.
 
 Saved scopes: TestSprite only `JerryNee/LoopLedger`; Vercel adds only `LoopLedger` while retaining `JerryNee.github.io`, `Immersive_Intelligence`, and `the-room`. Vercel's separate permission-upgrade request was not accepted. Project-wide preview authentication remains enabled (Standard Protection), and protected sourcemaps remain enabled.
 

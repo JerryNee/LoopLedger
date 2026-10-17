@@ -82,7 +82,15 @@ The real `Vercel` success event reached TestSprite. GitHub check `117320216990`,
 
 This is a billing/entitlement block, not an application test failure or a test pass. No execution/run IDs were issued. The portal still showed 136 credits. The trigger was disabled, not deleted, to preserve its configuration and avoid repeating the blocked attempt.
 
-The [public pricing page](https://www.testsprite.com/pricing), checked the same day, advertises GitHub PR auto-test on one repository in Free, whereas this branch-based CI trigger was refused. Ask TestSprite whether the distinction is PR versus Push triggers, an account entitlement issue, or a published-plan mismatch, and whether S4 includes the needed access. Do not infer which explanation is correct. Starter's advertised first month is free but then renews at $19/month; no trial, subscription, or purchase was started.
+The [public pricing page](https://www.testsprite.com/pricing), checked the same day, advertises GitHub PR auto-test on one repository in Free, whereas the integration refused to run. Starter's advertised first month is free but then renews at $19/month; no trial, subscription, or purchase was started.
+
+### PR-Mode Cross-Check
+
+To distinguish a Push-only restriction from a general entitlement block, the portal's Add Trigger dialog was switched to Pull Request mode for PR #1 at head `4015215350a2e65fe0b32d0d06e792a5f51a05f4`. CI and its Vercel deployment were successful, and the exact branch preview returned HTTP 200 without authentication. The selected signal was the same `Vercel` commit status. The literal preview URL was used only for this one-off verification, not saved as a rule for future PRs.
+
+Clicking **Send Test Event** returned: **The Free plan does not include GitHub CI runs - upgrade to Starter in Settings > Billing.** The accompanying title was **GitHub CI runs not on the Free plan**. No TestSprite check or bot comment appeared on that head, no test execution was created, and the balance remained 136 credits. The dialog was cancelled without creating a PR trigger; the original Push rule remains disabled.
+
+Both the real Push event and the PR-mode test event are therefore blocked for this account. Simply switching trigger modes does not resolve the observed restriction. Ask TestSprite to clarify the advertised Free allowance and whether the account needs S4 access enabled; only they can establish the underlying entitlement policy or backend cause.
 
 ## Handoff Rules
 

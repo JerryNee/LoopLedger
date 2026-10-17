@@ -59,11 +59,11 @@ This is manual cloud verification, **not** a GitHub-triggered suite or a passing
 
 ## Remaining Integration Work
 
-1. Initial deployment is complete. Redeploy the final PR head before collecting integration evidence.
+1. Git preview deployment is working: commit `3747a8c21d55ee05ecf2cb6deda669c302cf1229` produced `dpl_HqJ18ik6Uz3LcGhLGQV2vBRF6LLz` automatically. Its build log confirms the feature branch and commit, and GitHub CI plus the `Vercel` status passed. [Vercel bot comment](https://github.com/JerryNee/LoopLedger/pull/1#issuecomment-6230091756). The preview still requires Vercel login; unauthenticated access returned HTTP 302.
 2. Account confirmed: browser and CLI now use the same original Gmail account. A separate portal-created `LoopLedger S4` project (`28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8`) preserves the old Season 3 suite unchanged. Local configuration now points to S4; the historical checker is manual-only.
 3. Completed October 17: after explicit user confirmation, TestSprite's GitHub App was installed for `JerryNee/LoopLedger` only. The portal confirmed connection to JerryNee. The existing Vercel GitHub App retained its three prior repositories and added LoopLedger; `vercel git connect` then succeeded.
 4. Portal suite generation and strict cloud replays are complete for the deployed source above. Preserve the reviewed scripts; a fresh AI generation may replace them.
-5. In the project's GitHub Action settings, configure a PR trigger using a successful preview deployment event. Check that the preview corresponds to that PR's source commit. A PR-open event alone is not a deployment.
+5. Configure a deployment-backed trigger only after preview access is approved and verified. The prepared rule watches `JerryNee/LoopLedger`, branch `feat/season4-pr-evidence`, and the `Vercel` commit status. It is not saved. Use this exact branch scope: Vercel truncated/hashed the long branch name in its alias, so a generic `{branch-slug}` URL pattern would be incorrect. A branch-scoped trigger can publish the real test check on the same head commit shown in PR #1.
 6. Observe a real TestSprite bot check/comment on the project PR, fix any genuine failures, and rerun.
 7. Record run IDs, URLs, failures/fixes (if any), and final status here before submission.
 8. Submit the PR link, live URL, and TestSprite account email/name in Discord `#hackathon-submissions` according to the current S4 page. Do not reuse the S3 form instructions. No entry has been submitted yet.
@@ -79,5 +79,9 @@ Project deadline advertised: October 22, 2026, 23:59 PT (October 23, 01:59 Chica
 The first S4 portal suite contains eight reviewed cases; see [coverage and fixture details](season4-test-coverage.md). The two repository authorizations have been saved and verified. The next step is a real Git-triggered preview deployment, followed by a deployment-backed TestSprite trigger.
 
 Saved scopes: TestSprite only `JerryNee/LoopLedger`; Vercel adds only `LoopLedger` while retaining `JerryNee.github.io`, `Immersive_Intelligence`, and `the-room`. Vercel's separate permission-upgrade request was not accepted. Preview authentication is currently enabled (Standard Protection); changing public preview access requires separate user confirmation. Prefer a specific preview-domain exception over disabling project-wide protection.
+
+Pending user decision: make only `loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app` public. Vercel's Remove Protection confirmation dialog is prepared but has NOT been submitted. The requested exception affects that domain's present and future deployments, not every project/preview. Do not submit until the user explicitly approves this additional access change.
+
+TestSprite Free permits one environment. Creating `s4-pr-1` was refused with `FEATURE_GATED`; no extra environment or paid plan was created. After preview access approval, update the existing S4 `default` environment URL to the branch preview (preserving its ID and old run history), then select it for the prepared branch trigger. Do not select the current production URL by mistake. Enable a merge gate after validating an actual successful trigger run; until then a non-blocking TestSprite check is not proof of a pass. TestSprite installation ID: `172295278`; Vercel installation ID: `71790721`.
 
 Never reuse the four Season 3 passes as Season 4 evidence. Never claim GitHub App configuration is complete merely because the old CLI workflow exists. Do not commit API keys, `.env*`, or credential files. Keep source commits, deployment URLs, and test run IDs explicit. Follow `AGENTS.md` for deployed TestSprite verification.

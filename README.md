@@ -9,7 +9,7 @@ LoopLedger is a public pull-request evidence workspace. Inspect checks on a PR's
 
 This existing Season 3 project is being extended for TestSprite Hackathon Season 4. The PR workspace is now the default screen; the earlier ledger, CLI runs, and `LOOP.md` editor remain available as historical/manual records.
 
-**Status:** local checks pass. Hosted TestSprite testing and the GitHub App integration are still pending. This repository does not yet claim a qualifying Season 4 PR check. See [the Season 4 work log](docs/season4.md).
+**Status:** local checks pass, and all eight S4 cases passed strict TestSprite cloud replay after reviewing and repairing generated test scripts. GitHub App installation and deployment-backed PR automation are still pending. This repository does not yet claim a qualifying Season 4 PR check. See [the execution record](docs/season4.md) and [coverage and replay instructions](docs/season4-test-coverage.md).
 
 ### PR Evidence
 
@@ -52,7 +52,7 @@ It answers the judging questions quickly:
 - Repository: <https://github.com/JerryNee/LoopLedger>
 - Loop artifact: [`LOOP.md`](./LOOP.md)
 - TestSprite cloud suite: 4/4 runs passed against the deployed app.
-- CI/CD: lint/build, GitHub Pages deploy, and TestSprite checker workflows are active. TestSprite Checker run `28557891464` reran the saved cloud suite from GitHub Actions and passed 4/4.
+- Historical CI/CD: TestSprite Checker run `28557891464` reran the saved S3 cloud suite from GitHub Actions and passed 4/4. The old checker is now manual-only to keep it separate from S4 testing.
 - Demo script: [`docs/demo-script.md`](./docs/demo-script.md)
 
 ## What It Does
@@ -113,7 +113,7 @@ The TestSprite CLI flow expects a live deployed app. This repository includes a 
 
 The optional hackathon CI/CD bonus is supported by `.github/workflows/testsprite.yml`.
 
-The workflow runs after the GitHub Pages deployment workflow succeeds. With the repository `TESTSPRITE_API_KEY` secret configured, it configures the CLI and reruns the saved TestSprite project checks. If any rerun fails, the workflow fails.
+During S3, the workflow ran after a successful GitHub Pages deployment. It is now named `Historical Season 3 Checker` and runs only on manual dispatch. It is not the S4 GitHub App integration. With the repository `TESTSPRITE_API_KEY` secret configured, it configures the CLI and reruns the old S3 suite. If any rerun fails, the workflow fails.
 
 Verified CI checker evidence:
 

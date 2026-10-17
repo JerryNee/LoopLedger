@@ -1,9 +1,6 @@
-name: TestSprite Checker
+name: Historical Season 3 Checker
 
 on:
-  workflow_run:
-    workflows: ["Deploy GitHub Pages"]
-    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -17,7 +14,6 @@ jobs:
   rerun-checker:
     name: Rerun saved TestSprite suite
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     env:
       TESTSPRITE_API_KEY: ${{ secrets.TESTSPRITE_API_KEY }}
       TESTSPRITE_PROJECT_ID: 9a0f2053-4ee8-409d-bc24-9b339f6e7593
@@ -68,4 +64,3 @@ jobs:
           name: testsprite-result
           path: testsprite-result.json
           if-no-files-found: ignore
-

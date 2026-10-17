@@ -9,7 +9,7 @@ LoopLedger is a public pull-request evidence workspace. Inspect checks on a PR's
 
 This existing Season 3 project is being extended for TestSprite Hackathon Season 4. The PR workspace is now the default screen; the earlier ledger, CLI runs, and `LOOP.md` editor remain available as historical/manual records.
 
-**Status:** local checks pass, and all eight S4 cases passed strict TestSprite cloud replay after reviewing and repairing generated test scripts. The GitHub App is installed and Git-triggered Vercel previews work. Public preview access and deployment-backed test automation are still pending. This repository does not yet claim a qualifying Season 4 PR check. See [the execution record](docs/season4.md) and [coverage and replay instructions](docs/season4-test-coverage.md).
+**Status:** local checks pass, and all eight S4 cases passed strict TestSprite cloud replay after reviewing and repairing generated test scripts. The GitHub App is installed and Git-triggered Vercel previews work. The S4 branch preview is publicly accessible, and its deployment-backed TestSprite trigger is active; the first automatic result is pending verification. This repository does not yet claim a qualifying Season 4 PR check. See [the execution record](docs/season4.md) and [coverage and replay instructions](docs/season4-test-coverage.md).
 
 ### PR Evidence
 

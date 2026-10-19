@@ -6,6 +6,55 @@ Started October 16, 2026 (America/Chicago), on `feat/season4-pr-evidence`. Exist
 
 ## Latest Status: October 19
 
+After the user's explicit **enable and verify** confirmation, the existing
+Push rule was enabled. Its scope is unchanged: `JerryNee/LoopLedger`, branch
+`feat/season4-pr-evidence`, `Vercel` commit-status event, `default` environment.
+The portal showed **Active** before the push. No new PR rule, permission grant,
+public-access exception, subscription, or merge-protection change was made.
+
+The real push of `683355c98b09b13dbb54a8f392b444498022ac61` produced:
+
+- [GitHub CI](https://github.com/JerryNee/LoopLedger/actions/runs/39299719604):
+  success; 29 unit tests, lint/type checks, and build passed.
+- [Vercel deployment](https://vercel.com/jerrys-projects-82705168/loopledger-s4/BwbFrjVSR1KdSQkHbDwYzTMYHSCR),
+  ID `dpl_BwbFrjVSR1KdSQkHbDwYzTMYHSCR`: Ready at `2026-10-19T18:06:18Z`.
+  Its source commit and branch are the ones above; the deployment page lists
+  the existing public branch alias as its domain.
+- TestSprite trigger activity: the branch's Vercel event linked to that exact
+  GitHub commit and **Tests started**. No Send Test Event or Run Now was used.
+- [Automatic execution `4a946e5d-7803-4635-8557-7872f5f678ed`](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/4a946e5d-7803-4635-8557-7872f5f678ed):
+  eight tests on the expected branch preview, starting at `18:06:20Z`.
+  Final result: **7 passed, 1 failed, 0 blocked, 8 total**.
+- `TestSprite V3` commit StatusContext `56717269953` on the exact pushed head:
+  `success` at `18:09:04Z`, description **7/8 passed - 1 failed** (the API
+  uses a middle dot separator), linking that automatic execution.
+  **Green does not mean all tests passed or that merging would be blocked.**
+- The old PR bot comment still links the earlier manual PR-mode execution;
+  the new branch-triggered result was written as a commit status, not a new
+  PR bot comment.
+
+The download failure is run `a339a3df-63c2-4763-a561-8707467af13a`, source
+`github_action`, finished at `18:08:58.524Z`. Its result says the file could not
+be confirmed or read. The ignored bundle is under `.testsprite/runs/<run-id>/`.
+Its exported `code.py` is byte-identical to the preceding manual failure's
+export (SHA-256 `2aab81e3f01b13a33fc8c0e005249a604fc352ee36b201c77c2010339e0a30b9`),
+including older blocked-result comments. Do not present those comments as a
+fresh trace proving the current run's exact timeout cause. Keep the observed
+file-verification failure separate from the generated root-cause hypothesis.
+
+The account remains Free, with **127.5 credits** after this eight-case run
+(131.5 before it). The trigger remains enabled. This verifies automatic
+deployment dispatch and GitHub result delivery for the selected branch; it
+does not verify all-PR routing or a mandatory merge gate. PR #1 remains draft;
+no hackathon entry was submitted. No application code changed in this pass.
+
+These final-result documentation updates are initially local so recording the
+result does not immediately spend another four credits on a documentation-only
+deployment. The verified remote head remains `683355c`; include the updates
+with the next intentional push and validate that new head separately.
+
+## Earlier Manual PR Dispatch: October 19
+
 The Free-plan GitHub PR entitlement block did **not** recur in a real portal
 **Send Test Event** recheck. This one-off PR-mode verification created execution
 [`1da74c33-d74b-4668-a54d-37bac74db104`](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/1da74c33-d74b-4668-a54d-37bac74db104)
@@ -169,7 +218,7 @@ This is manual cloud verification, **not** a GitHub-triggered suite or a passing
 3. Completed October 17: after explicit user confirmation, TestSprite's GitHub App was installed for `JerryNee/LoopLedger` only. The portal confirmed connection to JerryNee. The existing Vercel GitHub App retained its three prior repositories and added LoopLedger; `vercel git connect` then succeeded.
 4. Portal suite generation and strict cloud replays are complete for the deployed source above. Preserve the reviewed scripts; a fresh AI generation may replace them.
 5. Completed October 17: after the user's separate confirmation, the exact branch preview domain was added to Vercel's public-access exceptions. Unauthenticated access returned HTTP 200; project-wide Require Log In remains enabled with Standard Protection. The existing S4 `default` environment now points to this preview. A saved Push rule watches `JerryNee/LoopLedger`, branch `feat/season4-pr-evidence`, and the `Vercel` commit status. Use this exact branch scope: Vercel truncated/hashed the long branch name in its alias, so a generic `{branch-slug}` URL pattern would be incorrect. The rule was disabled after its first real event was blocked by billing, as recorded below.
-6. October 19: the PR-mode test event now dispatches successfully on Free (7 passed, 1 blocked; see Latest Status). Finish download investigation, then re-enable the branch rule with the user's confirmation and verify a real deployment-triggered execution. The one-off event does not yet establish persistent Push automation. Do not upgrade or accept a renewing trial without the user's separate authorization.
+6. October 19: the PR-mode test event dispatched on Free (7 passed, 1 blocked). After explicit user confirmation, the saved branch rule was enabled and a real push automatically dispatched execution `4a946e5d-7803-4635-8557-7872f5f678ed` (7 passed, 1 failed). Its result reached the exact commit as a StatusContext. Automatic branch dispatch is verified; download verification and any all-PR routing/mandatory merge gate remain unresolved. Do not upgrade or accept a renewing trial without the user's separate authorization.
 7. Record run IDs, URLs, failures/fixes (if any), and final status here before submission.
 8. Submit the PR link, live URL, and TestSprite account email/name in Discord `#hackathon-submissions` according to the current S4 page. Do not reuse the S3 form instructions. No entry has been submitted yet.
 
@@ -199,7 +248,7 @@ Both the real Push event and the PR-mode test event were blocked for this accoun
 
 ## Handoff Rules
 
-The first S4 portal suite contains eight reviewed cases; see [coverage and fixture details](season4-test-coverage.md). Repository authorizations and Git preview deployment are verified. The branch-scoped trigger is saved but still disabled after the historical billing block. PR-mode dispatch now works on Free; first inspect the October 19 execution, then re-enable and verify tests against a new deployed PR head. Neither old CLI replay passes nor a portal Send Test Event alone establishes persistent automatic integration success.
+The first S4 portal suite contains eight reviewed cases; see [coverage and fixture details](season4-test-coverage.md). Repository authorizations and Git preview deployment are verified. The branch-scoped trigger is **active**, and the October 19 push of `683355c` automatically ran the suite and posted its result to that commit. The result was **7 passed, 1 failed**, despite a green GitHub status. Investigate the download failure without weakening file-content assertions. The earlier CLI passes and manual PR-mode event are separate evidence. Do not say every PR is covered or mandatory merge blocking is configured.
 
 Saved scopes: TestSprite only `JerryNee/LoopLedger`; Vercel adds only `LoopLedger` while retaining `JerryNee.github.io`, `Immersive_Intelligence`, and `the-room`. Vercel's separate permission-upgrade request was not accepted. Project-wide preview authentication remains enabled (Standard Protection), and protected sourcemaps remain enabled.
 

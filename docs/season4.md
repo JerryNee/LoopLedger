@@ -6,6 +6,49 @@ Started October 16, 2026 (America/Chicago), on `feat/season4-pr-evidence`. Exist
 
 ## Latest Status: October 19
 
+### Final Outcome
+
+Remote head **`19eed173e127fc4710b84617caddbbee46c47659`** deployed as
+`dpl_9TG8DRFrqbhxn5GwJfRbKYTGHGA3` (Ready `18:32:13Z`; Vercel commit status
+at `18:32:14Z`). [CI 39303286325](https://github.com/JerryNee/LoopLedger/actions/runs/39303286325)
+passed. There are no application/dependency changes between `cd77ef7` and this
+head; the latter records the target correction and verification evidence.
+
+The real deployment event started automatic execution
+[`954c0a2b-6960-447e-a3bb-cabd334721e5`](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/954c0a2b-6960-447e-a3bb-cabd334721e5)
+at `18:32:15Z`: **7 passed / 0 failed / 1 blocked / 8 total**. The download
+run is `e8398834-3ac5-444b-89f3-f7344a193330`, blocked at `18:35:30.537Z`.
+The agent reports click timeouts and no verifiable file after keyboard
+activation. Unlike the earlier run, its step 4/5 snapshots contain the correct
+preview origin, `index-DM2F1wG7.js`, `index-D0iCk5sd.css`, and an actual `<a>`
+with `download="PR-218-evidence.md"` and a Blob URL on that preview origin.
+The wrong-target issue is corrected for this automatic download run; the
+remaining agent download-verification issue is unresolved.
+
+The same application code passed strict cloud replay
+`41f29b45-f262-468f-95e5-9e1a07eb44fc` (details below), including reading the
+actual file and comparing its entire content. This contradicts the generated
+failure hypothesis that the app has no real download, but does not prove the
+platform's internal root cause. Keep both results visible. No assertion was
+relaxed, no success toast substituted for a file, and no failure was planted.
+The saved strict script remains version `v-70ee21fc2c32` after the final run.
+
+GitHub wrote `TestSprite V3` state `success` at `18:35:36Z`, description
+`7/8 passed - 1 blocked` (API middle-dot separator), pointing to the same
+execution. **Not an automatic all-pass or mandatory merge gate.** The precise
+branch rule remains Active; PR #1 remains draft and no hackathon submission
+was made. Free balance is **118 credits** (127.5 at the start of this repair:
+two eight-case automatic executions plus three focused replays). No upgrades,
+trials, permission expansion, source deletion, or new monitoring was performed.
+
+Next: ask TestSprite whether the deployment-triggered agent supports Blob
+downloads and can use the reviewed strict replay, and how `VAR_{url}` is bound
+after an environment URL change. Do not keep rerunning unchanged cases or
+rewrite the app into a server-backed download merely on an AI fix suggestion.
+Failure bundles remain ignored because they include signed artifact URLs.
+Final-result docs are saved locally without a further push, to avoid another
+documentation-only automatic run; the verified remote head is the one above.
+
 ### Native Download Compatibility Follow-up
 
 Before changing application code, the reviewed strict download replay was
@@ -60,7 +103,7 @@ run `41f29b45-f262-468f-95e5-9e1a07eb44fc`, finished `18:30:44.195Z`,
 [`df8fd22b-2f0b-4d69-8941-95df68c09716`](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/df8fd22b-2f0b-4d69-8941-95df68c09716).
 This verifies the actual branch app download, not the automatic agent. The
 workaround is intentionally branch-bound, not portable to other environments.
-Automatic verification with the corrected plan is pending the next push.
+The corrected-plan automatic outcome is recorded in Final Outcome above.
 
 ### Previous Automatic Execution
 

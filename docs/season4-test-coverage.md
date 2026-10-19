@@ -34,11 +34,11 @@ The portal-generated suite is retained in the same project. Four scripts were re
 | Test ID | Local replay source | Uploaded version |
 | --- | --- | --- |
 | `2feb0aa9-9405-40f9-8fd3-d918d070540d` | [Invalid URL](../.testsprite/tests/invalid-url-preserves-evidence.py) | `v-19aed8972f71` |
-| `d2a4b5ca-1813-432d-a6e0-d588a8962af7` | [Download](../.testsprite/tests/download-evidence-report.py) | `v-19b1b25c4fdd` |
+| `d2a4b5ca-1813-432d-a6e0-d588a8962af7` | [Download](../.testsprite/tests/download-evidence-report.py) | `v-70ee21fc2c32` |
 | `8b9e3da9-1907-4c9f-9fc7-9c9202500785` | [Keyboard](../.testsprite/tests/keyboard-tabs.py) | `v-46e1bf6b6b3d` |
 | `9bd365d0-55fa-49cc-938f-c98115245e83` | [Persistence](../.testsprite/tests/history-persistence.py) | `v-8a31ae1efeab` |
 
-`VAR_{url}` is substituted by the TestSprite cloud runner. These files are not local browser automation commands. Runtime launch flags match the generated cloud harness. The download/persistence/keyboard cases had no saved code version after their failed/cancelled initial execution, so their first upload required `code put --force`; later edits should use `--expected-version` from a fresh `test code get`.
+`VAR_{url}` is substituted by the TestSprite cloud runner. **October 19 caveat:** it appeared to resolve to the old production site despite preview-target metadata. The download replay now explicitly targets the approved feature-branch preview and checks the hostname before verifying the real file. Its successful run is `41f29b45-f262-468f-95e5-9e1a07eb44fc`. The other replay scripts still use the variable; do not treat their earlier passes as proof of the latest branch deployment. These files are not local browser automation commands. Runtime launch flags match the generated cloud harness. The download/persistence/keyboard cases had no saved code version after their failed/cancelled initial execution, so their first upload required `code put --force`; later edits should use `--expected-version` from a fresh `test code get`.
 
 To replay the saved suite without AI healing:
 

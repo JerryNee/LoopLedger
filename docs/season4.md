@@ -29,7 +29,38 @@ empty state, content/filename/focus, tab changes, successful/failed refresh, and
 StrictMode cleanup. Lint, TypeScript/production build, and npm audit passed
 (zero reported vulnerabilities). Desktop and 390px mobile inspection found no
 horizontal overflow or overlapping download controls; keyboard focus is visible.
-Hosted automatic verification of this application change is pending deployment.
+Commit `cd77ef75f5b7baea5bee765088bcf9b4a8b7eb03` was pushed and deployed as
+`dpl_GwEr41rbR3eGDgqgjoHafAUtT4T3`, Ready at `18:24:52Z`; the deployment page
+confirmed the source SHA and existing public branch alias. [CI 39302248588](https://github.com/JerryNee/LoopLedger/actions/runs/39302248588)
+passed all 35 tests, lint and build. Its automatically dispatched execution
+[`5ce547c3-de5c-40cf-977e-e8ab0a1d69cf`](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/5ce547c3-de5c-40cf-977e-e8ab0a1d69cf)
+finished **7 passed / 1 blocked**. GitHub again reported green, with description
+`7/8 passed - 1 blocked`, not an all-pass result.
+
+**Target mismatch discovered:** the blocked download run
+`7364521e-487d-4ee7-86fe-afb43ace87a6` names the preview as its target, but its
+fresh step snapshot (`18:25:51Z`) contains the old download button and assets
+from `https://loopledger-s4.vercel.app`, including `index-XnT-ekCK.js`.
+The new preview visibly has a download link. A strict replay using `VAR_{url}`
+then failed to find that link (run `b3d37d44-b515-4f37-985e-4f2988ca9761`,
+execution `7b41eddb-337d-494c-8cb7-f916fa1cec71`). Consequently, neither the
+automatic blocked result nor the baseline pass above proves it tested the
+branch deployment. Do not infer actual navigation from target metadata alone.
+
+Both the project target and default environment already name the correct
+preview. The Sources page still contained an old-production Site Overview.
+Re-Explore completed and added a Ready preview Site Overview; the old source
+was not deleted. This may explain agent navigation but does not establish the
+backend cause of the `VAR_{url}` substitution mismatch.
+
+The download plan now explicitly requires the exact preview hostname. The
+strict replay also explicitly navigates there and asserts the hostname. With
+all file/content assertions unchanged, version `v-70ee21fc2c32` **passed**:
+run `41f29b45-f262-468f-95e5-9e1a07eb44fc`, finished `18:30:44.195Z`,
+[`df8fd22b-2f0b-4d69-8941-95df68c09716`](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/df8fd22b-2f0b-4d69-8941-95df68c09716).
+This verifies the actual branch app download, not the automatic agent. The
+workaround is intentionally branch-bound, not portable to other environments.
+Automatic verification with the corrected plan is pending the next push.
 
 ### Previous Automatic Execution
 

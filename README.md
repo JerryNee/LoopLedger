@@ -11,6 +11,8 @@ This existing Season 3 project is being extended for TestSprite Hackathon Season
 
 **Status (October 19):** deployment-triggered testing is now verified on the Free plan. Pushing `683355c` caused Vercel to deploy the feature branch, then automatically started [eight TestSprite tests](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/4a946e5d-7803-4635-8557-7872f5f678ed): **7 passed, 1 failed, 0 blocked**. Markdown download verification remains unresolved. The GitHub status says SUCCESS despite describing `7/8 passed · 1 failed`; this is not an all-pass result or a verified merge gate. The active rule covers only `feat/season4-pr-evidence`, not arbitrary PR branches. Earlier strict replays and the manual PR-mode report are separate evidence. See [the execution record](docs/season4.md) and [coverage and replay instructions](docs/season4-test-coverage.md).
 
+**Download follow-up:** `cd77ef7` adds a native download link and six DOM regression tests (35 tests total). Its automatic execution ended **7 passed / 1 blocked**. Investigation found that the download runner visited the old production site despite preview-target metadata. A strict replay explicitly bound to the correct branch then [passed real-file and complete-content verification](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/df8fd22b-2f0b-4d69-8941-95df68c09716). The plan now requires the exact preview hostname; automatic re-verification is pending. No all-pass claim is made from the green GitHub status alone.
+
 ### PR Evidence
 
 - Retrieves public GitHub check runs and commit statuses for the observed head SHA.

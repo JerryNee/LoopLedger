@@ -14,7 +14,7 @@
     },
     {
       "type": "action",
-      "description": "Click the toolbar button with the accessible name and title \"Download evidence report\" (the downward-arrow download icon next to Refresh evidence). This is a separate button, not the Report tab. Wait for the browser download triggered by this click."
+      "description": "Activate the native download link with the accessible name and title \"Download evidence report\" (the downward-arrow icon next to Refresh evidence). The link has a download attribute naming PR-218-evidence.md. This is a separate link, not the Report tab. Wait for the browser download triggered by this activation."
     },
     {
       "type": "assertion",

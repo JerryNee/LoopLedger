@@ -27,7 +27,7 @@ async def run_test():
 
             # Observe the browser download, not a filename rendered in the page.
             async with page.expect_download() as event:
-                await page.get_by_role("button", name="Download evidence report", exact=True).click()
+                await page.get_by_role("link", name="Download evidence report", exact=True).click()
             download = await event.value
             assert download.suggested_filename == "PR-218-evidence.md"
             assert await download.failure() is None

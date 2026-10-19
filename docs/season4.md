@@ -6,6 +6,33 @@ Started October 16, 2026 (America/Chicago), on `feat/season4-pr-evidence`. Exist
 
 ## Latest Status: October 19
 
+### Native Download Compatibility Follow-up
+
+Before changing application code, the reviewed strict download replay was
+restored over the generated `v1.0` script, whose final assertion unconditionally
+raised an old blocked-result message. The strict replay **passed against the
+unchanged deployed application** at `2026-10-19T18:19:11Z`: run
+`ceed0d2b-4569-4566-8973-6410fb428666`, execution
+[`abc15429-eb5f-4431-ae81-80c381472d71`](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/abc15429-eb5f-4431-ae81-80c381472d71).
+It checked the actual downloaded file, exact filename, complete content equality
+with the report, fixture URL, full SHA, and Scope section. This is evidence that
+the old app can download correctly, not that the automatic agent passed.
+
+The follow-up replaces the scripted detached-anchor click with a persistent
+native download link. Its Blob URL stays available until the report changes or
+the view unmounts. The report preview and download share the same generated
+content. The saved plan and strict replay now target that link; file assertions
+have not been weakened. The updated five-step plan was saved at `18:24:06Z`.
+
+Local verification: **35 tests passed**, including six DOM regressions covering
+empty state, content/filename/focus, tab changes, successful/failed refresh, and
+StrictMode cleanup. Lint, TypeScript/production build, and npm audit passed
+(zero reported vulnerabilities). Desktop and 390px mobile inspection found no
+horizontal overflow or overlapping download controls; keyboard focus is visible.
+Hosted automatic verification of this application change is pending deployment.
+
+### Previous Automatic Execution
+
 After the user's explicit **enable and verify** confirmation, the existing
 Push rule was enabled. Its scope is unchanged: `JerryNee/LoopLedger`, branch
 `feat/season4-pr-evidence`, `Vercel` commit-status event, `default` environment.

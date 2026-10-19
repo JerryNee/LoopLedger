@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { CheckCircle2, Clock3, Download, ExternalLink, GitCommitHorizontal, GitPullRequest, History, LoaderCircle, RefreshCw, Search, ShieldQuestion, TriangleAlert } from 'lucide-react';
 import { checkVerdict, fetchPullRequestEvidence, generateEvidenceMarkdown, readSnapshots, safeHttpsUrl, saveSnapshots, testSpriteVerdict, type EvidenceSnapshot, type EvidenceVerdict } from './prEvidence';
 
@@ -28,7 +28,21 @@ export default function PullRequestsView() {
   const [storageError, setStorageError] = useState('');
   const [tab, setTab] = useState<'checks' | 'history' | 'report'>('checks');
   const controller = useRef<AbortController | null>(null);
+  const downloadLink = useRef<HTMLAnchorElement | null>(null);
+  const report = snapshot ? generateEvidenceMarkdown(snapshot, history) : null;
   useEffect(() => () => { controller.current?.abort(); controller.current = null; }, []);
+
+  useLayoutEffect(() => {
+    const link = downloadLink.current;
+    if (!link || report === null) return;
+    // Keep a native download target available until the report changes or unmounts.
+    const url = URL.createObjectURL(new Blob([report], { type: 'text/markdown;charset=utf-8' }));
+    link.href = url;
+    return () => {
+      link.removeAttribute('href');
+      URL.revokeObjectURL(url);
+    };
+  }, [report]);
 
   async function inspect(event?: React.FormEvent) {
     event?.preventDefault();
@@ -56,17 +70,6 @@ export default function PullRequestsView() {
       window.clearTimeout(timeout);
       if (controller.current === request) setLoading(false);
     }
-  }
-
-  function download() {
-    if (!snapshot) return;
-    const blob = new Blob([generateEvidenceMarkdown(snapshot, history)], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = `PR-${snapshot.pr.number}-evidence.md`;
-    anchor.click();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   const relatedHistory = history.filter(item => item.pr.url === snapshot?.pr.url);
@@ -101,14 +104,14 @@ export default function PullRequestsView() {
         <p className="snapshot-note">Saved snapshot, not a live merge decision. Required checks and the deployment tested are not verified.</p>
       </section>
       <div className="evidence-toolbar"><div className="segmented" role="tablist" aria-label="Evidence views" onKeyDown={navigateTabs}>{evidenceTabs.map(value => <button key={value} role="tab" tabIndex={tab === value ? 0 : -1} id={`tab-${value}`} aria-controls={`panel-${value}`} aria-selected={tab === value} className={tab === value ? 'active' : ''} onClick={() => setTab(value)}>{value === 'checks' ? `Checks (${snapshot.checks.length})` : value === 'history' ? `History (${relatedHistory.length})` : 'Report'}</button>)}</div>
-        <div className="top-actions"><button className="icon-button" title="Refresh evidence" aria-label="Refresh evidence" disabled={loading || input.trim() !== snapshot.pr.url} onClick={() => void inspect()}><RefreshCw size={17} /></button><button className="icon-button" title="Download evidence report" aria-label="Download evidence report" onClick={download}><Download size={17} /></button></div></div>
+        <div className="top-actions"><button className="icon-button" title="Refresh evidence" aria-label="Refresh evidence" disabled={loading || input.trim() !== snapshot.pr.url} onClick={() => void inspect()}><RefreshCw size={17} /></button><a ref={downloadLink} className="icon-button" title="Download evidence report" aria-label="Download evidence report" download={`PR-${snapshot.pr.number}-evidence.md`}><Download size={17} /></a></div></div>
       <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
         {tab === 'checks' && <>
           {snapshot.checks.length ? <div className="checks-list">{snapshot.checks.map(check => <article className="check-row" key={`${check.kind}-${check.source}-${check.id}`}><div><strong>{check.name}</strong><span>{check.source} · {check.kind === 'check' ? 'Check run' : 'Commit status'}</span></div><Verdict value={checkVerdict(check)} /><EvidenceLink url={check.url}>View result</EvidenceLink></article>)}</div> : <p className="empty-checks">No check runs or commit statuses were returned for this commit.</p>}
           {snapshot.comments.length > 0 && <div className="bot-comments"><h3>TestSprite bot comments</h3>{snapshot.comments.map(comment => <p key={comment.url}><EvidenceLink url={comment.url}>{comment.author}</EvidenceLink></p>)}</div>}
         </>}
         {tab === 'history' && <ol className="snapshot-history">{relatedHistory.map((item, index) => <li key={`${item.capturedAt}-${index}`}><History size={17} /><div><time>{new Date(item.capturedAt).toLocaleString()}</time><code>{item.headSha.slice(0, 12)}</code></div><Verdict value={testSpriteVerdict(item)} /><span>{item.headSha === snapshot.headSha ? 'Same commit' : 'Earlier observed commit'}</span></li>)}</ol>}
-        {tab === 'report' && <pre className="export-preview">{generateEvidenceMarkdown(snapshot, history)}</pre>}
+        {tab === 'report' && <pre className="export-preview">{report}</pre>}
       </div>
     </> : <div className="pr-empty"><GitPullRequest size={36} strokeWidth={1.3} /><h3>No pull request selected</h3><p>No GitHub evidence has been captured.</p></div>}
     <footer className="evidence-footer"><span>Source: GitHub REST API</span><span>Check labels identify TestSprite results; publisher identity is not authenticated.</span></footer>

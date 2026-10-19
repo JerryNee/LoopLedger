@@ -9,7 +9,7 @@ LoopLedger is a public pull-request evidence workspace. Inspect checks on a PR's
 
 This existing Season 3 project is being extended for TestSprite Hackathon Season 4. The PR workspace is now the default screen; the earlier ledger, CLI runs, and `LOOP.md` editor remain available as historical/manual records.
 
-**Status:** local checks pass, and all eight S4 cases passed strict TestSprite cloud replay after reviewing and repairing generated test scripts. The GitHub App and public branch preview work. The first deployment-backed trigger reached TestSprite but was blocked by billing before any tests ran; the saved trigger is disabled pending clarification. There is no passing automated Season 4 check yet. See [the execution record](docs/season4.md) and [coverage and replay instructions](docs/season4-test-coverage.md).
+**Status (October 19):** local checks and the earlier eight strict cloud replays passed. A new one-off PR integration test now runs on the Free plan and has posted a [TestSprite bot report](https://github.com/JerryNee/LoopLedger/pull/1#issuecomment-6273318655): **7 passed, 1 blocked, 8 total**. The blocked case could not confirm the Markdown download. GitHub shows a green status, but that is **not** an 8/8 pass. The saved automatic trigger remains disabled, so this manual test event does not establish deployment-triggered automation. See [the execution record](docs/season4.md) and [coverage and replay instructions](docs/season4-test-coverage.md).
 
 ### PR Evidence
 

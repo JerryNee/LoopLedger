@@ -1,0 +1,24 @@
+{
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to the app in a fresh browser session"
+    },
+    {
+      "type": "action",
+      "description": "Enter https://github.com/TestSprite/testsprite-cli/pull/218 and click Inspect PR. Wait for the PR title and head SHA."
+    },
+    {
+      "type": "action",
+      "description": "Open the Report tab"
+    },
+    {
+      "type": "action",
+      "description": "Click the toolbar button with the accessible name and title \"Download evidence report\" (the downward-arrow download icon next to Refresh evidence). This is a separate button, not the Report tab. Wait for the browser download triggered by this click."
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the browser actually downloaded a file named PR-218-evidence.md, and read that file. Its Markdown must contain https://github.com/TestSprite/testsprite-cli/pull/218, the full head SHA 79054cff490203c7ae4b6bb3ca4f737734cabd9e, and a Scope section. Displaying the report in the page alone is not a pass."
+    }
+  ]
+}

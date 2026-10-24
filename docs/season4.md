@@ -4,7 +4,21 @@
 
 Started October 16, 2026 (America/Chicago), on `feat/season4-pr-evidence`. Existing Season 3 ledger data is historical; the new default view reads public GitHub evidence bound to the observed head SHA.
 
-## Latest Status: October 19
+## Submission Preparation: October 24
+
+The official Discord deadline was extended to October 26, 11:59 PM Pacific.
+The Season 4 submission channel is now open. The October 19 support question
+has been posted; no technical reply was found during the October 24 check.
+Submission does not wait on a support reply, and unresolved behavior is disclosed.
+
+This documentation update corrects the live README link to the tested public
+feature-branch alias and removes stale submission-preparation wording. It makes
+no application, test, permission, billing, or trigger changes. The previous
+verified remote application head is `19eed173e127fc4710b84617caddbbee46c47659`.
+New deployment-triggered outcomes will be recorded on PR #1 after this push;
+the October 19 results below must not be relabeled as a test of a new commit.
+
+## Verified Results: October 19
 
 ### Final Outcome
 

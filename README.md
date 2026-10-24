@@ -4,10 +4,12 @@ LoopLedger is a public pull-request evidence workspace. Inspect checks on a PR's
 
 ## Season 4
 
-- [Live Season 4 app](https://loopledger-s4.vercel.app)
-- [Implementation PR](https://github.com/JerryNee/LoopLedger/pull/1) (draft until hosted testing and integration are verified)
+- [Live Season 4 app](https://loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app)
+- [Implementation and submission PR](https://github.com/JerryNee/LoopLedger/pull/1)
 
 This existing Season 3 project is being extended for TestSprite Hackathon Season 4. The PR workspace is now the default screen; the earlier ledger, CLI runs, and `LOOP.md` editor remain available as historical/manual records.
+
+**Submission preparation (October 24):** the live link above is the tested feature-branch deployment, not the older production alias. The following results belong to their linked executions and commits; the PR description records the latest submission verification. See [suite coverage](docs/season4-test-coverage.md) for the eight scenarios and their assertions. Automatic downloads and mandatory merge blocking remain limitations, not completed features.
 
 **Status (October 19):** pushing `19eed17` deployed the feature branch and automatically ran [eight TestSprite tests](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/954c0a2b-6960-447e-a3bb-cabd334721e5): **7 passed, 0 failed, 1 blocked**. The automatic agent still cannot verify the Markdown download. A separate strict cloud replay [passed actual-file, filename, and complete-content checks](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/df8fd22b-2f0b-4d69-8941-95df68c09716) against the same application code. These are distinct results, not 8/8 automatically passed.
 

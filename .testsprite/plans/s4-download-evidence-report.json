@@ -10,15 +10,15 @@
     },
     {
       "type": "action",
-      "description": "Open the Report tab"
+      "description": "Open the Report tab and retain its complete Markdown text for comparison with the downloaded file. Leave keyboard focus on the Report tab."
     },
     {
       "type": "action",
-      "description": "Activate the native download link with the accessible name and title \"Download evidence report\" (the downward-arrow icon next to Refresh evidence). The link has a download attribute naming PR-218-evidence.md. This is a separate link, not the Report tab. Wait for the browser download triggered by this activation."
+      "description": "Download using keyboard activation: from the focused Report tab, press Tab to focus Refresh evidence, then Tab again to focus the native link named Download evidence report. Verify that this download link is focused, then press Enter to activate it and wait for the real browser download. Use keyboard input, not the mouse-click action, for this download link. Do not substitute reading the on-page report or fetching the Blob URL for a real downloaded file."
     },
     {
       "type": "assertion",
-      "description": "Verify the browser actually downloaded a file named PR-218-evidence.md, and read that file. Its Markdown must contain https://github.com/TestSprite/testsprite-cli/pull/218, the full head SHA 79054cff490203c7ae4b6bb3ca4f737734cabd9e, and a Scope section. Displaying the report in the page alone is not a pass."
+      "description": "Verify the browser actually downloaded a file named PR-218-evidence.md, and read that file from the download directory. Its full content must equal the Markdown text retained from the Report tab, including https://github.com/TestSprite/testsprite-cli/pull/218, the full head SHA 79054cff490203c7ae4b6bb3ca4f737734cabd9e, and a Scope section. Displaying the report in the page alone is not a pass. If the downloaded file cannot be read or its complete content cannot be compared, report the test as blocked rather than passed."
     }
   ]
 }

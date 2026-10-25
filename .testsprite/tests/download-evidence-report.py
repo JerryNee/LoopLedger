@@ -30,18 +30,30 @@ async def run_test():
                 await expect(report).to_contain_text(text)
             expected_content = await report.inner_text()
 
-            # Observe the browser download, not a filename rendered in the page.
-            async with page.expect_download() as event:
-                await page.get_by_role("link", name="Download evidence report", exact=True).click()
-            download = await event.value
-            assert download.suggested_filename == "PR-218-evidence.md"
-            assert await download.failure() is None
-            path = await download.path()
-            assert path is not None
-            content = Path(path).read_text(encoding="utf-8")
-            assert content == expected_content
-            for text in (pr_url, sha, "## Scope"):
-                assert text in content
+            link = page.get_by_role("link", name="Download evidence report", exact=True)
+            await expect(link).to_have_attribute("download", "PR-218-evidence.md")
+            # Keep pointer coverage, then exercise the keyboard path used by the agent.
+            for activation in ("pointer", "keyboard"):
+                if activation == "keyboard":
+                    await page.get_by_role("tab", name="Report", exact=True).focus()
+                    await page.keyboard.press("Tab")
+                    await expect(page.get_by_role("button", name="Refresh evidence")).to_be_focused()
+                    await page.keyboard.press("Tab")
+                    await expect(link).to_be_focused()
+                async with page.expect_download() as event:
+                    if activation == "pointer":
+                        await link.click()
+                    else:
+                        await page.keyboard.press("Enter")
+                download = await event.value
+                assert download.suggested_filename == "PR-218-evidence.md"
+                assert await download.failure() is None
+                path = await download.path()
+                assert path is not None
+                content = Path(path).read_text(encoding="utf-8")
+                assert content == expected_content
+                for text in (pr_url, sha, "## Scope"):
+                    assert text in content
         finally:
             await context.close()
             await browser.close()

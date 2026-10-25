@@ -1,5 +1,6 @@
 import asyncio
 import re
+from urllib.parse import urlsplit
 from playwright.async_api import async_playwright, expect
 
 
@@ -13,7 +14,9 @@ async def run_test():
         context.set_default_timeout(35000)
         try:
             page = await context.new_page()
-            await page.goto("VAR_{url}")
+            target = "https://loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app"
+            await page.goto(target)
+            assert urlsplit(page.url).netloc == urlsplit(target).netloc
             await page.get_by_role("textbox", name="Pull request URL").fill(
                 "https://github.com/TestSprite/testsprite-cli/pull/218"
             )

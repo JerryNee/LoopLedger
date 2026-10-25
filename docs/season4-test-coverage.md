@@ -11,7 +11,7 @@ The portal proposed 26 cases with substantial duplication across categories. Eig
 3. **Invalid URL preserves evidence:** after inspecting the fixture, submit `https://example.com/nope`. The GitHub-only validation alert appears and the prior PR identity, SHA, and capture time remain unchanged.
 4. **History, report, and persistence:** refresh once, inspect two snapshots, verify the report's full SHA and scope, reload, and recover the same evidence and history.
 5. **Keyboard tabs:** ArrowRight, ArrowLeft, Home, and End move tab selection, panel, and focus together.
-6. **Markdown download:** `PR-218-evidence.md` contains the PR URL, full SHA, and scope.
+6. **Markdown download:** pointer and keyboard activation each produce a real file named `PR-218-evidence.md`. Read each file and compare its complete content with the report, including the PR URL, full SHA, and scope. An on-page preview alone is not a pass.
 7. **Manual ledger:** add `S4 QA ledger entry` with a test-only detail and evidence reference; verify the ledger and LOOP.md contain them.
 8. **Manual CLI run:** add `S4 QA local run`, command `echo s4-test-only`, status `queued`, zero credits, and a note explicitly saying it is not a cloud execution. Verify the recorded run and export. The command is only form text and is not executed.
 
@@ -33,12 +33,14 @@ The portal-generated suite is retained in the same project. Four scripts were re
 
 | Test ID | Local replay source | Uploaded version |
 | --- | --- | --- |
-| `2feb0aa9-9405-40f9-8fd3-d918d070540d` | [Invalid URL](../.testsprite/tests/invalid-url-preserves-evidence.py) | `v-19aed8972f71` |
-| `d2a4b5ca-1813-432d-a6e0-d588a8962af7` | [Download](../.testsprite/tests/download-evidence-report.py) | `v-70ee21fc2c32` |
-| `8b9e3da9-1907-4c9f-9fc7-9c9202500785` | [Keyboard](../.testsprite/tests/keyboard-tabs.py) | `v-46e1bf6b6b3d` |
-| `9bd365d0-55fa-49cc-938f-c98115245e83` | [Persistence](../.testsprite/tests/history-persistence.py) | `v-8a31ae1efeab` |
+| `2feb0aa9-9405-40f9-8fd3-d918d070540d` | [Invalid URL](../.testsprite/tests/invalid-url-preserves-evidence.py) | `v-5786939cb0de` |
+| `d2a4b5ca-1813-432d-a6e0-d588a8962af7` | [Download](../.testsprite/tests/download-evidence-report.py) | `v-8398cfa183b6` |
+| `8b9e3da9-1907-4c9f-9fc7-9c9202500785` | [Keyboard](../.testsprite/tests/keyboard-tabs.py) | `v-8847a0a1ecc2` |
+| `9bd365d0-55fa-49cc-938f-c98115245e83` | [Persistence](../.testsprite/tests/history-persistence.py) | `v-e0450e6fd2ad` |
 
-`VAR_{url}` is substituted by the TestSprite cloud runner. **October 19 caveat:** it appeared to resolve to the old production site despite preview-target metadata. The download replay now explicitly targets the approved feature-branch preview and checks the hostname before verifying the real file. Its successful run is `41f29b45-f262-468f-95e5-9e1a07eb44fc`. The other replay scripts still use the variable; do not treat their earlier passes as proof of the latest branch deployment. These files are not local browser automation commands. Runtime launch flags match the generated cloud harness. The download/persistence/keyboard cases had no saved code version after their failed/cancelled initial execution, so their first upload required `code put --force`; later edits should use `--expected-version` from a fresh `test code get`.
+`VAR_{url}` is substituted by the TestSprite cloud runner. **Historical October 19 caveat:** it appeared to resolve to the old production site despite preview-target metadata. All four reviewed scripts now explicitly navigate to the approved feature-branch preview and assert its hostname. The other four generated scripts also navigate to that preview. Do not treat earlier variable-based passes as proof of the current branch deployment. These files are cloud replay scripts, not local browser automation commands. Runtime launch flags match the generated cloud harness. The download/persistence/keyboard cases had no saved code version after their failed/cancelled initial execution, so their first upload required `code put --force`; later edits use `--expected-version` from a fresh `test code get`.
+
+The [S4 workflow](../.github/workflows/testsprite-s4.yml) checks the environment URL and exact stored contents of the four reviewed scripts before replay. The [suite manifest](../.testsprite/s4-suite.json) fixes the expected eight test IDs, and the result verifier refuses partial or non-passing runs. The branch preview must have a successful Vercel status for the workflow commit, with no branch-head change before or during testing. This is a branch-specific verification workflow, not a general-purpose deployment identity guarantee or required merge gate.
 
 To replay the saved suite without AI healing:
 

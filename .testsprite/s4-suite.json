@@ -1,0 +1,15 @@
+{
+  "projectId": "28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8",
+  "environment": "default",
+  "targetUrl": "https://loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app",
+  "tests": [
+    { "id": "d2a4b5ca-1813-432d-a6e0-d588a8962af7", "codeFile": ".testsprite/tests/download-evidence-report.py" },
+    { "id": "9bd365d0-55fa-49cc-938f-c98115245e83", "codeFile": ".testsprite/tests/history-persistence.py" },
+    { "id": "8b9e3da9-1907-4c9f-9fc7-9c9202500785", "codeFile": ".testsprite/tests/keyboard-tabs.py" },
+    { "id": "2feb0aa9-9405-40f9-8fd3-d918d070540d", "codeFile": ".testsprite/tests/invalid-url-preserves-evidence.py" },
+    { "id": "9f9f57e6-83de-4f1d-9d89-864419a266c4" },
+    { "id": "878102bb-4641-4cf2-8339-b6f53c463f2c" },
+    { "id": "4cde62d3-1f4d-4b9f-9498-92e84b904c7f" },
+    { "id": "ebaafce5-b2ef-43d2-8a7c-e650332c3a44" }
+  ]
+}

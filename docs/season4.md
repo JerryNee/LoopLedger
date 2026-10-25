@@ -4,6 +4,43 @@
 
 Started October 16, 2026 (America/Chicago), on `feat/season4-pr-evidence`. Existing Season 3 ledger data is historical; the new default view reads public GitHub evidence bound to the observed head SHA.
 
+## Download Verification Repair: October 24
+
+Application head `8d2c4ce9caed5c7e80a41aca17172f233329d76d` again produced
+7 passed / 1 blocked through the GitHub App agent, execution
+`60ed2537-43b0-4c77-9ec9-617be72d55bc`. Download run
+`b3ddb633-8b62-42dd-a2cc-90d89559a8cb` reported a click-watchdog timeout.
+
+The plan was strengthened to retain the full report and use keyboard activation.
+The portal agent still could not obtain a readable downloaded file: run
+`a9e5be1b-4178-48af-8081-103ab27d8ff2`, execution
+`0865b0d1-3c38-4d89-97ad-6c534a82958f`, remained blocked. Keyboard activation
+avoided the original click timeout but did not resolve agent verification.
+No application source changed and the blocked result remains part of the record.
+
+The reviewed strict replay now tests both pointer and keyboard downloads,
+reads the actual files, and checks exact filename, complete report equality,
+fixture URL, full SHA, and Scope. It passed as run
+`b799692c-f5e3-4718-9e61-267300449731`. A subsequent eight-test batch passed
+8/8 with auto-heal disabled; its download run is
+`2175f0a8-5cad-4154-acd5-f074dfd04820`, execution
+`291cf7e6-329a-4b81-b16d-4de44a7d229a`. These are strict replay results,
+not a repair of the separate AI-agent runner.
+
+After that batch, the other three reviewed scripts were updated to explicitly
+target and verify the feature-branch hostname, removing reliance on `VAR_{url}`.
+Their new versions still require a fresh full-suite verification. The new
+GitHub Actions workflow waits for this commit's Vercel status, checks the saved
+reviewed scripts, replays with auto-heal off, and requires eight matching
+successful run receipts. It fails on blocked/incomplete/stale results and
+publishes sanitized IDs, not signed artifact URLs. It uses the repository's
+existing TestSprite secret and does not change branch protection or app permissions.
+
+Local verification: 48 tests, lint, and build passed. The first GitHub execution
+of this workflow is pending at commit time; its result will be linked on PR #1
+after the real push/deployment. The original GitHub App trigger remains active
+until that replacement is verified. No hackathon entry has been posted.
+
 ## Submission Preparation: October 24
 
 The official Discord deadline was extended to October 26, 11:59 PM Pacific.

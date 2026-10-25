@@ -18,29 +18,32 @@ jobs:
     name: TestSprite S4 strict suite
     if: github.repository == 'JerryNee/LoopLedger' && github.ref == 'refs/heads/feat/season4-pr-evidence'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Wait for this commit's Vercel preview
+      - name: Wait for this commit's deployment and existing agent run
         uses: actions/github-script@v7
         with:
           script: |
             const branch = 'feat/season4-pr-evidence';
-            const deadline = Date.now() + 360000;
+            const deadline = Date.now() + 720000;
             while (Date.now() < deadline) {
               const ref = await github.rest.git.getRef({ ...context.repo, ref: `heads/${branch}` });
               if (ref.data.object.sha !== context.sha) throw new Error('Branch has moved; this run cannot verify the current preview.');
               const statuses = await github.rest.repos.listCommitStatusesForRef({ ...context.repo, ref: context.sha, per_page: 100 });
               const vercel = statuses.data.find(status => status.context === 'Vercel');
-              if (vercel?.state === 'success') return;
               if (['error', 'failure'].includes(vercel?.state)) throw new Error('Vercel deployment failed.');
+              // The installed GitHub App dispatches the same test IDs on deployment.
+              // Await its terminal status to avoid conflicts; never count it as a pass.
+              const agent = statuses.data.find(status => status.context === 'TestSprite V3');
+              if (vercel?.state === 'success' && ['success', 'error', 'failure'].includes(agent?.state)) return;
               await new Promise(resolve => setTimeout(resolve, 10000));
             }
-            throw new Error('Timed out waiting for this commit to deploy.');
+            throw new Error('Timed out waiting for deployment and the existing TestSprite V3 run.');
 
       - name: Install pinned TestSprite CLI
         run: |

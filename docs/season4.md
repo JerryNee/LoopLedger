@@ -36,10 +36,16 @@ successful run receipts. It fails on blocked/incomplete/stale results and
 publishes sanitized IDs, not signed artifact URLs. It uses the repository's
 existing TestSprite secret and does not change branch protection or app permissions.
 
-Local verification: 48 tests, lint, and build passed. The first GitHub execution
-of this workflow is pending at commit time; its result will be linked on PR #1
-after the real push/deployment. The original GitHub App trigger remains active
-until that replacement is verified. No hackathon entry has been posted.
+Local verification: 48 tests, lint, and build passed. The first GitHub attempt
+on `babd5af` passed deployment, credential, environment, and code preflight but
+dispatched zero tests: all eight IDs were still in flight through the existing
+GitHub App. [Attempt 40145334008](https://github.com/JerryNee/LoopLedger/actions/runs/40145334008)
+correctly failed rather than treating skipped/conflicting tests as a pass.
+The workflow now waits for that commit's existing App execution to finish before
+strict replay. Its terminal status is never treated as evidence of passing tests.
+The first completed strict GitHub replay is pending at commit time; its result
+will be linked on PR #1. The original App trigger remains active and unchanged.
+No hackathon entry has been posted.
 
 ## Submission Preparation: October 24
 

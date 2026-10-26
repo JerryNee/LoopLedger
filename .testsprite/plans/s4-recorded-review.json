@@ -1,0 +1,12 @@
+{
+  "planSteps": [
+    { "type": "action", "description": "In a fresh session open https://loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app and stay on this exact hostname. Verify there is no selected PR. Focus Open recorded case and activate it with Enter." },
+    { "type": "assertion", "description": "Verify the Recorded case warning says Not the current PR head. Case findings must distinguish 7 passed / 1 blocked from the separate strict 8/8 replay. The comparison shows babd5af9be69 to 213172ab23e4 and exactly one changed outcome: Recovered, TestSprite S4 strict suite." },
+    { "type": "assertion", "description": "Inspect link destinations without navigating away: Before points to https://github.com/JerryNee/LoopLedger/actions/runs/40145334008/job/121025328126 and After to https://github.com/JerryNee/LoopLedger/actions/runs/40145526729/job/121025907592. These are links to historical results, not live-run claims." },
+    { "type": "action", "description": "Enable Include unchanged outcomes and new attempts. Verify five comparison rows, then disable it and verify one row again." },
+    { "type": "action", "description": "Open Report, retain its complete Markdown text, activate Download evidence report and wait for the actual browser download." },
+    { "type": "assertion", "description": "Read the actual downloaded PR-1-evidence.md file. Its complete content must equal the visible report and include Not the current PR head, Changes since baseline, Recovered, babd5af9be6984dc764b14323ff5fc14410a21ef, and 213172ab23e4ed85a3aeb4e1c2aa9829bc98dc59. An on-page preview or fetching a Blob URL is not proof of a downloaded file. If the file cannot be read, mark this assertion blocked, not passed." },
+    { "type": "action", "description": "Set the browser viewport to 390 by 844, return to Checks, and verify the Comparison baseline selector is usable and the document does not overflow horizontally." },
+    { "type": "assertion", "description": "Select Back to my workspace. Verify no selected PR and an empty Pull request URL. Reload and verify Open recorded case is visible with no selected PR; the historical example must not populate personal saved history." }
+  ]
+}

@@ -1,0 +1,98 @@
+name: TestSprite S4 Strict Replay
+
+on:
+  push:
+    branches: [feat/season4-pr-evidence]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: read
+
+concurrency:
+  group: testsprite-s4-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: TestSprite S4 strict suite
+    if: github.repository == 'JerryNee/LoopLedger' && github.ref == 'refs/heads/feat/season4-pr-evidence'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Wait for this commit's deployment and existing agent run
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = 'feat/season4-pr-evidence';
+            const deadline = Date.now() + 720000;
+            while (Date.now() < deadline) {
+              const ref = await github.rest.git.getRef({ ...context.repo, ref: `heads/${branch}` });
+              if (ref.data.object.sha !== context.sha) throw new Error('Branch has moved; this run cannot verify the current preview.');
+              const statuses = await github.rest.repos.listCommitStatusesForRef({ ...context.repo, ref: context.sha, per_page: 100 });
+              const vercel = statuses.data.find(status => status.context === 'Vercel');
+              if (['error', 'failure'].includes(vercel?.state)) throw new Error('Vercel deployment failed.');
+              // The installed GitHub App dispatches the same test IDs on deployment.
+              // Await its terminal status to avoid conflicts; never count it as a pass.
+              const agent = statuses.data.find(status => status.context === 'TestSprite V3');
+              if (vercel?.state === 'success' && ['success', 'error', 'failure'].includes(agent?.state)) return;
+              await new Promise(resolve => setTimeout(resolve, 10000));
+            }
+            throw new Error('Timed out waiting for deployment and the existing TestSprite V3 run.');
+
+      - name: Install pinned TestSprite CLI
+        run: |
+          npm install --prefix "$RUNNER_TEMP/testsprite-cli" --ignore-scripts @testsprite/testsprite-cli@0.14.0
+          echo "$RUNNER_TEMP/testsprite-cli/node_modules/.bin" >> "$GITHUB_PATH"
+
+      - name: Verify environment and reviewed test code
+        env:
+          TESTSPRITE_API_KEY: ${{ secrets.TESTSPRITE_API_KEY }}
+        run: |
+          test -n "$TESTSPRITE_API_KEY" || { echo '::error::Missing TestSprite secret'; exit 1; }
+          node --input-type=module <<'NODE'
+          import { execFileSync } from 'node:child_process';
+          import { readFileSync } from 'node:fs';
+          import assert from 'node:assert/strict';
+          const suite = JSON.parse(readFileSync('.testsprite/s4-suite.json', 'utf8'));
+          const cli = args => JSON.parse(execFileSync('testsprite', [...args, '--output', 'json'], { encoding: 'utf8' }));
+          const env = cli(['project', 'env', 'get', suite.projectId, suite.environment]).environment;
+          assert.equal(env.url.replace(/\/$/, ''), suite.targetUrl, 'Wrong test deployment');
+          for (const test of suite.tests.filter(test => test.codeFile)) {
+            const stored = cli(['test', 'code', 'get', test.id]);
+            assert.equal(stored.code, readFileSync(test.codeFile, 'utf8'), `Test code drift: ${test.id}`);
+          }
+          NODE
+
+      - name: Run the complete manifest suite with auto-heal disabled
+        env:
+          TESTSPRITE_API_KEY: ${{ secrets.TESTSPRITE_API_KEY }}
+        shell: bash
+        run: |
+          set -o pipefail
+          testsprite test rerun --all \
+            --project 28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8 --env default \
+            --no-auto-heal --wait --timeout 480 --max-concurrency 4 \
+            --idempotency-key "loopledger-s4-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --output json > "$RUNNER_TEMP/testsprite-s4-result.json"
+          node scripts/s4-result.mjs "$RUNNER_TEMP/testsprite-s4-result.json"
+
+      - name: Refuse a stale branch result
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const ref = await github.rest.git.getRef({ ...context.repo, ref: 'heads/feat/season4-pr-evidence' });
+            if (ref.data.object.sha !== context.sha) throw new Error('Branch changed during testing; results do not verify the latest preview.');
+
+      - name: Upload sanitized run receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testsprite-s4-evidence
+          path: testsprite-s4-evidence.json
+          if-no-files-found: ignore

@@ -1,0 +1,24 @@
+{
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "In a fresh browser session, navigate to https://loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app and verify that this exact hostname is still in the address bar. Stay on this branch preview throughout the test. Do not navigate to the older loopledger-s4.vercel.app production site, even if old captured pages reference it."
+    },
+    {
+      "type": "action",
+      "description": "Enter https://github.com/TestSprite/testsprite-cli/pull/218 and click Inspect PR. Wait for the PR title and head SHA."
+    },
+    {
+      "type": "action",
+      "description": "Open the Report tab and retain its complete Markdown text for comparison with the downloaded file. Leave keyboard focus on the Report tab."
+    },
+    {
+      "type": "action",
+      "description": "Download using keyboard activation: from the focused Report tab, press Tab to focus Refresh evidence, then Tab again to focus the native link named Download evidence report. Verify that this download link is focused, then press Enter to activate it and wait for the real browser download. Use keyboard input, not the mouse-click action, for this download link. Do not substitute reading the on-page report or fetching the Blob URL for a real downloaded file."
+    },
+    {
+      "type": "assertion",
+      "description": "Verify the browser actually downloaded a file named PR-218-evidence.md, and read that file from the download directory. Its full content must equal the Markdown text retained from the Report tab, including https://github.com/TestSprite/testsprite-cli/pull/218, the full head SHA 79054cff490203c7ae4b6bb3ca4f737734cabd9e, and a Scope section. Displaying the report in the page alone is not a pass. If the downloaded file cannot be read or its complete content cannot be compared, report the test as blocked rather than passed."
+    }
+  ]
+}

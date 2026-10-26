@@ -7,16 +7,17 @@ import {
   FileText,
   Gauge,
   GitBranch,
+  GitPullRequest,
   History,
   Link,
   ListChecks,
   Plus,
   RotateCcw,
   ShieldCheck,
-  Sparkles,
   TriangleAlert,
 } from 'lucide-react';
 import { generateLoopMarkdown } from './exportLoop';
+import PullRequestsView from './PullRequestsView';
 import { getReadinessItems, type ReadinessItem } from './readiness';
 import { clearLedgerState, loadLedgerState, restoreDemoState, saveLedgerState } from './storage';
 import type {
@@ -30,7 +31,7 @@ import type {
   TestRun,
 } from './types';
 
-type ViewMode = 'ledger' | 'runs' | 'export';
+type ViewMode = 'pull-requests' | 'ledger' | 'runs' | 'export';
 
 const entryKinds: EntryKind[] = ['plan', 'test', 'failure', 'fix', 'rerun', 'decision'];
 const entryStatuses: EntryStatus[] = ['open', 'in-progress', 'resolved', 'verified'];
@@ -89,16 +90,22 @@ function statusIcon(status: RunStatus | EntryStatus | RequirementStatus) {
 
 export default function App() {
   const [state, setState] = useState<LedgerState>(() => loadLedgerState());
-  const [view, setView] = useState<ViewMode>('ledger');
+  const [view, setView] = useState<ViewMode>('pull-requests');
   const contentGridRef = useRef<HTMLDivElement>(null);
   const [entryFilter, setEntryFilter] = useState<EntryKind | 'all'>('all');
   const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle');
   const [requirementDraft, setRequirementDraft] = useState(initialRequirement);
   const [runDraft, setRunDraft] = useState(initialRun);
   const [entryDraft, setEntryDraft] = useState(initialEntry);
+  const [saveError, setSaveError] = useState('');
 
   useEffect(() => {
-    saveLedgerState(state);
+    try {
+      saveLedgerState(state);
+      setSaveError('');
+    } catch {
+      setSaveError('Browser storage is unavailable. Ledger changes will not survive a refresh.');
+    }
   }, [state]);
 
   const loopMarkdown = useMemo(() => generateLoopMarkdown(state), [state]);
@@ -276,6 +283,14 @@ export default function App() {
 
         <nav className="nav-list">
           <button
+            className={view === 'pull-requests' ? 'nav-item active' : 'nav-item'}
+            aria-current={view === 'pull-requests' ? 'page' : undefined}
+            onClick={() => selectView('pull-requests')}
+          >
+            <GitPullRequest size={17} />
+            Pull requests
+          </button>
+          <button
             className={view === 'ledger' ? 'nav-item active' : 'nav-item'}
             aria-current={view === 'ledger' ? 'page' : undefined}
             onClick={() => selectView('ledger')}
@@ -304,22 +319,19 @@ export default function App() {
           </button>
         </nav>
 
-        <div className="sidebar-note">
-          <Sparkles size={16} />
-          <p>Convert agent work and TestSprite verdicts into the proof judges read first.</p>
-        </div>
+        <p className="sidebar-storage">Local workspace<br />Evidence stays in this browser</p>
       </aside>
 
       <section className="workspace">
         <header className="topbar">
           <div>
-            <p className="section-label">TestSprite Season 3</p>
+            <p className="section-label">TestSprite Season 4</p>
             <h1>{state.project.name}</h1>
             <p className="topbar-subtitle">
-              Turns TestSprite CLI runs into a judge-readable LOOP.md.
+              PR evidence and release checks
             </p>
           </div>
-          <div className="top-actions">
+          {view !== 'pull-requests' && <div className="top-actions">
             <button className="button secondary" onClick={restoreDemo}>
               <RotateCcw size={16} />
               Demo
@@ -332,17 +344,12 @@ export default function App() {
               <FileText size={16} />
               Export
             </button>
-          </div>
+          </div>}
         </header>
 
-        <BriefingPanel
-          state={state}
-          passedRuns={stats.passedRuns}
-          readyCount={readyCount}
-          readyTotal={readinessItems.length}
-          credits={stats.credits}
-        />
-
+        {view === 'pull-requests' ? <PullRequestsView /> : <>
+        {saveError && <p role="alert" className="evidence-error">{saveError}</p>}
+        <p className="legacy-note">Manual ledger · includes Season 3 history. These records do not verify the current PR.</p>
         <section className="project-strip" aria-label="Project profile">
           <label>
             Project
@@ -443,79 +450,9 @@ export default function App() {
             <pre className="markdown-preview">{loopMarkdown}</pre>
           </aside>
         </div>
+        </>}
       </section>
     </main>
-  );
-}
-
-function BriefingPanel(props: {
-  state: LedgerState;
-  passedRuns: number;
-  readyCount: number;
-  readyTotal: number;
-  credits: number;
-}) {
-  const { state, passedRuns, readyCount, readyTotal, credits } = props;
-  const packetReady = readyCount === readyTotal;
-
-  return (
-    <section className="briefing-panel" aria-label="Judge-facing project summary">
-      <div className="briefing-copy">
-        <p className="section-label">What this proves</p>
-        <h2>Agent work, checker results, and submission evidence stay in one ledger.</h2>
-        <p>
-          LoopLedger is the audit workspace for a TestSprite build loop: requirements,
-          cloud CLI verdicts, failures, fixes, reruns, costs, and the final LOOP.md
-          artifact are captured as one reviewable record.
-        </p>
-        <div className="proof-list" aria-label="Loop proof summary">
-          <span><CheckCircle2 size={15} /> Public live app and repo</span>
-          <span><ListChecks size={15} /> {passedRuns}/{state.runs.length} TestSprite runs passed</span>
-          <span><GitBranch size={15} /> Failure and fix trail recorded</span>
-          <span><FileText size={15} /> Exportable LOOP.md</span>
-        </div>
-      </div>
-
-      <aside className="submission-packet" aria-label="Submission packet">
-        <div>
-          <span className={packetReady ? 'packet-status ready' : 'packet-status attention'}>
-            {packetReady ? <CheckCircle2 size={14} /> : <TriangleAlert size={14} />}
-            {packetReady ? 'Ready packet' : 'Needs attention'}
-          </span>
-          <strong>Submission packet</strong>
-        </div>
-        <dl>
-          <div>
-            <dt>Live demo</dt>
-            <dd>
-              {state.project.liveUrl ? (
-                <a href={state.project.liveUrl} target="_blank" rel="noreferrer">
-                  {state.project.liveUrl}
-                </a>
-              ) : 'Not recorded'}
-            </dd>
-          </div>
-          <div>
-            <dt>Repository</dt>
-            <dd>
-              {state.project.repoUrl ? (
-                <a href={state.project.repoUrl} target="_blank" rel="noreferrer">
-                  {state.project.repoUrl}
-                </a>
-              ) : 'Not recorded'}
-            </dd>
-          </div>
-          <div>
-            <dt>Checker evidence</dt>
-            <dd>{passedRuns}/{state.runs.length} passed, {credits.toFixed(2)} credits tracked</dd>
-          </div>
-          <div>
-            <dt>Readiness</dt>
-            <dd>{readyCount}/{readyTotal} checks ready</dd>
-          </div>
-        </dl>
-      </aside>
-    </section>
   );
 }
 

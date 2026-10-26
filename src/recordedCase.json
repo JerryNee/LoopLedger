@@ -1,0 +1,181 @@
+{
+  "description": "Historical commit checks retrieved from the public GitHub API, not snapshots captured during the original runs. Not the current PR head.",
+  "snapshots": [
+    {
+      "pr": {
+        "owner": "JerryNee",
+        "repo": "LoopLedger",
+        "number": 1,
+        "url": "https://github.com/JerryNee/LoopLedger/pull/1"
+      },
+      "title": "feat: inspect current-commit PR evidence for TestSprite Season 4",
+      "headSha": "213172ab23e4ed85a3aeb4e1c2aa9829bc98dc59",
+      "branch": "feat/season4-pr-evidence",
+      "state": "open",
+      "draft": false,
+      "capturedAt": "2026-10-26T05:37:25.961Z",
+      "checks": [
+        {
+          "id": 121025994968,
+          "name": "Vercel Preview Comments",
+          "source": "vercel",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/JerryNee/LoopLedger/runs/121025994968",
+          "testSprite": false
+        },
+        {
+          "id": 121025917888,
+          "name": "Lint and build",
+          "source": "github-actions",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/JerryNee/LoopLedger/actions/runs/40145529916/job/121025917888",
+          "testSprite": false
+        },
+        {
+          "id": 121025912180,
+          "name": "Vercel Preview Comments",
+          "source": "vercel",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/JerryNee/LoopLedger/runs/121025912180",
+          "testSprite": false
+        },
+        {
+          "id": 121025907592,
+          "name": "TestSprite S4 strict suite",
+          "source": "github-actions",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/JerryNee/LoopLedger/actions/runs/40145526729/job/121025907592",
+          "testSprite": true
+        },
+        {
+          "id": 57183465782,
+          "name": "TestSprite V3",
+          "source": "Commit status",
+          "kind": "status",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/0b7d5d6c-8b61-4894-ac1c-3a4c62ffc9b0",
+          "testSprite": true
+        },
+        {
+          "id": 57183407516,
+          "name": "Vercel",
+          "source": "Commit status",
+          "kind": "status",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://vercel.com/jerrys-projects-82705168/loopledger-s4/2TWFeWK11LNXkR32WqRHQKwmpkTR",
+          "testSprite": false
+        },
+        {
+          "id": 57183396052,
+          "name": "Vercel",
+          "source": "Commit status",
+          "kind": "status",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://vercel.com/jerrys-projects-82705168/loopledger-s4/2TWFeWK11LNXkR32WqRHQKwmpkTR",
+          "testSprite": false
+        }
+      ],
+      "comments": [],
+      "origin": "recorded-case"
+    },
+    {
+      "pr": {
+        "owner": "JerryNee",
+        "repo": "LoopLedger",
+        "number": 1,
+        "url": "https://github.com/JerryNee/LoopLedger/pull/1"
+      },
+      "title": "feat: inspect current-commit PR evidence for TestSprite Season 4",
+      "headSha": "babd5af9be6984dc764b14323ff5fc14410a21ef",
+      "branch": "feat/season4-pr-evidence",
+      "state": "open",
+      "draft": false,
+      "capturedAt": "2026-10-26T05:37:25.018Z",
+      "checks": [
+        {
+          "id": 121025407835,
+          "name": "Vercel Preview Comments",
+          "source": "vercel",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/JerryNee/LoopLedger/runs/121025407835",
+          "testSprite": false
+        },
+        {
+          "id": 121025340872,
+          "name": "Lint and build",
+          "source": "github-actions",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/JerryNee/LoopLedger/actions/runs/40145338317/job/121025340872",
+          "testSprite": false
+        },
+        {
+          "id": 121025331738,
+          "name": "Vercel Preview Comments",
+          "source": "vercel",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/JerryNee/LoopLedger/runs/121025331738",
+          "testSprite": false
+        },
+        {
+          "id": 121025328126,
+          "name": "TestSprite S4 strict suite",
+          "source": "github-actions",
+          "kind": "check",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/JerryNee/LoopLedger/actions/runs/40145334008/job/121025328126",
+          "testSprite": true
+        },
+        {
+          "id": 57183393359,
+          "name": "TestSprite V3",
+          "source": "Commit status",
+          "kind": "status",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/4ad83fa0-53eb-468e-8be5-8e0145a07cb8",
+          "testSprite": true
+        },
+        {
+          "id": 57183325810,
+          "name": "Vercel",
+          "source": "Commit status",
+          "kind": "status",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://vercel.com/jerrys-projects-82705168/loopledger-s4/CgcZi9mP94X27MRi8hArNo8dm5W6",
+          "testSprite": false
+        },
+        {
+          "id": 57183315206,
+          "name": "Vercel",
+          "source": "Commit status",
+          "kind": "status",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://vercel.com/jerrys-projects-82705168/loopledger-s4/CgcZi9mP94X27MRi8hArNo8dm5W6",
+          "testSprite": false
+        }
+      ],
+      "comments": [],
+      "origin": "recorded-case"
+    }
+  ]
+}

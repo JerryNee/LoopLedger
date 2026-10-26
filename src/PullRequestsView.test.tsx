@@ -3,7 +3,8 @@ import { act, StrictMode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import PullRequestsView from './PullRequestsView';
-import { fetchPullRequestEvidence, generateEvidenceMarkdown, parsePullRequestUrl, saveSnapshots, type EvidenceSnapshot } from './prEvidence';
+import { fetchPullRequestEvidence, parsePullRequestUrl, saveSnapshots, type EvidenceSnapshot } from './prEvidence';
+import { generateReviewMarkdown } from './evidenceReview';
 
 vi.mock('./prEvidence', async importOriginal => ({
   ...await importOriginal<typeof import('./prEvidence')>(),
@@ -84,7 +85,7 @@ describe('native PR report download', () => {
     await act(async () => container.querySelector<HTMLButtonElement>('#tab-report')!.click());
     expect(blobs[0].type).toBe('text/markdown;charset=utf-8');
     expect(await blobText(blobs[0])).toBe(container.querySelector('pre')!.textContent);
-    expect(await blobText(blobs[0])).toBe(generateEvidenceMarkdown(snapshot, [snapshot]));
+    expect(await blobText(blobs[0])).toBe(generateReviewMarkdown(snapshot, [snapshot]));
     expect(revokeObjectURL).not.toHaveBeenCalled();
   });
 
@@ -106,7 +107,7 @@ describe('native PR report download', () => {
     await act(async () => container.querySelector<HTMLButtonElement>('[aria-label="Refresh evidence"]')!.click());
     expect(download().href).toBe('blob:http://localhost/report-2');
     expect(revokeObjectURL).toHaveBeenCalledExactlyOnceWith('blob:http://localhost/report-1');
-    expect(await blobText(blobs[1])).toBe(generateEvidenceMarkdown(next, [next, snapshot]));
+    expect(await blobText(blobs[1])).toBe(generateReviewMarkdown(next, [next, snapshot]));
   });
 
   it('keeps the previous download intact when refreshing fails', async () => {
@@ -126,5 +127,40 @@ describe('native PR report download', () => {
     expect(urls).toHaveLength(2);
     await act(async () => root.render(null));
     expect(revokeObjectURL.mock.calls.map(([url]) => url)).toEqual(urls);
+  });
+});
+
+describe('recorded case isolation', () => {
+  it('opens a source-linked case without GitHub access or writing personal history', async () => {
+    await render([]);
+    const stored = window.localStorage.getItem('loopledger-pr-evidence-v1');
+    const open = [...container.querySelectorAll('button')].find(button => button.textContent?.includes('Open recorded case'))!;
+    await act(async () => open.click());
+    expect(fetchPullRequestEvidence).not.toHaveBeenCalled();
+    expect(window.localStorage.getItem('loopledger-pr-evidence-v1')).toBe(stored);
+    expect(container.querySelector('[aria-label="Recorded case"]')?.textContent).toContain('Not the current PR head');
+    expect(container.querySelector('.change-recovered')?.textContent).toContain('TestSprite S4 strict suite');
+    expect(await blobText(blobs[0])).toContain('Recorded case:');
+    const back = [...container.querySelectorAll('button')].find(button => button.textContent === 'Back to my workspace')!;
+    await act(async () => back.click());
+    expect(container.querySelector('[aria-label="Selected pull request"]')).toBeNull();
+    expect(container.querySelector('a[download]')).toBeNull();
+  });
+  it('restores personal evidence after opening the case', async () => {
+    await render();
+    const stored = window.localStorage.getItem('loopledger-pr-evidence-v1');
+    await act(async () => container.querySelector<HTMLButtonElement>('.case-switch')!.click());
+    await act(async () => [...container.querySelectorAll('button')].find(button => button.textContent === 'Back to my workspace')!.click());
+    expect(container.querySelector('[aria-label="Selected pull request"] code')?.textContent).toBe(snapshot.headSha.slice(0, 12));
+    expect(window.localStorage.getItem('loopledger-pr-evidence-v1')).toBe(stored);
+  });
+  it('shows the selected baseline in the downloaded report', async () => {
+    const older = { ...snapshot, headSha: 'c'.repeat(40), capturedAt: '2026-10-18T18:00:00.000Z' };
+    const oldest = { ...snapshot, headSha: 'd'.repeat(40), capturedAt: '2026-10-17T18:00:00.000Z' };
+    await render([snapshot, older, oldest]);
+    expect(await blobText(blobs[0])).toContain(`Baseline: ${older.headSha}`);
+    const select = container.querySelector('select')!;
+    await act(async () => { select.value = '1'; select.dispatchEvent(new Event('change', { bubbles: true })); });
+    expect(await blobText(blobs[blobs.length - 1])).toContain(`Baseline: ${oldest.headSha}`);
   });
 });

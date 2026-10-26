@@ -12,6 +12,8 @@ LoopLedger is for builders using coding agents and TestSprite CLI loops during a
 
 For Season 4, LoopLedger captures public GitHub PR evidence for the exact observed head commit: checks, statuses, bot-comment links, and locally saved snapshots. Success means a reviewer can distinguish current-commit evidence from historical passes and download a report with explicit limitations. It is not a branch-protection or publisher-identity verifier.
 
+Reviewers can compare two observations of the same PR, including reruns on one commit. New failures, missing results, pending retries, unverified results, and actual recoveries remain distinct. A source-linked historical investigation is available without an API request and stays separate from the user's saved history.
+
 The Season 3 ledger remains available for manually recording requirements, CLI runs, failures, fixes, and `LOOP.md` exports. Those historical records must not imply that a current PR has passed.
 
 ## Brand Personality

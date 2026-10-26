@@ -24,6 +24,7 @@ export interface EvidenceSnapshot {
   state: 'open' | 'closed' | 'merged';
   draft: boolean;
   capturedAt: string;
+  origin?: 'recorded-case';
   checks: CheckEvidence[];
   comments: { url: string; author: string; updatedAt: string }[];
 }
@@ -219,6 +220,7 @@ export function generateEvidenceMarkdown(snapshot: EvidenceSnapshot, history: Ev
   const escape = (text: string) => text.replace(/[\r\n]+/g, ' ').replace(/[\\`*_{}[\]<>|]/g, '\\$&');
   return [
     `# PR evidence: ${escape(snapshot.title)}`,
+    ...(snapshot.origin === 'recorded-case' ? ['', '> Recorded case: historical commit checks retrieved later from GitHub. Not the current PR head or a live verification.'] : []),
     '', `- Pull request: ${snapshot.pr.url}`, `- Head commit: ${snapshot.headSha}`,
     `- Captured: ${snapshot.capturedAt}`, `- TestSprite-labelled checks: ${testSpriteVerdict(snapshot)}`,
     '', '## Checks on this commit', '',

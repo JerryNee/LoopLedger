@@ -69,7 +69,7 @@ jobs:
           }
           NODE
 
-      - name: Run all eight tests with auto-heal disabled
+      - name: Run the complete manifest suite with auto-heal disabled
         env:
           TESTSPRITE_API_KEY: ${{ secrets.TESTSPRITE_API_KEY }}
         shell: bash

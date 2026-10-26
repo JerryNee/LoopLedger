@@ -3,6 +3,7 @@
   "environment": "default",
   "targetUrl": "https://loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app",
   "tests": [
+    { "id": "ce395f1f-ee13-4eeb-8856-15ba4febd0a8", "codeFile": ".testsprite/tests/recorded-review.py" },
     { "id": "d2a4b5ca-1813-432d-a6e0-d588a8962af7", "codeFile": ".testsprite/tests/download-evidence-report.py" },
     { "id": "9bd365d0-55fa-49cc-938f-c98115245e83", "codeFile": ".testsprite/tests/history-persistence.py" },
     { "id": "8b9e3da9-1907-4c9f-9fc7-9c9202500785", "codeFile": ".testsprite/tests/keyboard-tabs.py" },

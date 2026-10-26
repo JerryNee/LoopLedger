@@ -1,5 +1,19 @@
 # Season 4 Work Log
 
+## October 26: Evidence Comparison and Required Checks
+
+This section supersedes the older handoff's statements about eight tests and absent branch protection.
+
+- Added before/after comparison for two observations of one PR: new failures, missing checks, pending reruns, unverified outcomes, actual recoveries, and unchanged/new attempts.
+- Added a clearly historical, source-linked case reconstructed from GitHub checks on `babd5af` and `213172a`. It is separate from personal local history and exports its provenance and full SHAs. Its scheduling recovery is not represented as a fix to TestSprite's blocked download agent.
+- Local coverage increased from 48 to 67 passing tests; lint/build passed. Desktop and 390px mobile were inspected. The original Discord submission remains the same entry.
+- First expanded strict workflow: [40276245574](https://github.com/JerryNee/LoopLedger/actions/runs/40276245574), commit `59995c7`, **7/9 passed**. The new comparison/download/mobile/isolation test passed (`db594bc6-2938-4838-837d-94db05b9eef5`). Validation failed on the old `Snapshot:` label; a freshly generated CLI-record script selected an empty option rather than `queued`. Both were test-harness issues, not claimed new product defects. The repaired CLI selector also needed to distinguish the navigation button from `Copy LOOP.md`; that failed attempt is retained as run `1be60c8b-066d-4165-a443-4859cf30701e`.
+- The separate native agent execution [97f7a65e](https://www.testsprite.com/dashboard-v3/o/77167281-b0a3-5213-a18d-6af0a2168c02/projects/28ffbf1d-d12b-4c52-b3c8-51ec6407ebd8/execution/97f7a65e-9323-4b40-ba26-355b6d257ee7) blocked on downloads and could not verify the new case's keyboard/mobile assertions. Its ledger-count observation did not establish PR-history isolation. An explicit [eight-step plan](../.testsprite/plans/s4-recorded-review.json) now documents the required assertions; strict saved-script replay independently verifies them. No blocked result is reclassified.
+- `main` now requires `Lint and build` and `TestSprite S4 strict suite`, pinned to GitHub Actions app 15368, with an up-to-date base, resolved conversations, and admin enforcement. PR #1 was observed BLOCKED while strict testing was pending/failed. No bypass was used and no merge was attempted.
+- Six reviewed cloud scripts are checked byte-for-byte before replay. The manifest contains nine required IDs. See [PR #1](https://github.com/JerryNee/LoopLedger/pull/1) for subsequent full-suite receipts, rather than treating these historical failures or older eight-case passes as the current result.
+
+The app remains a read-only inspection aid. The repository's mandatory checks are a separate policy, not a feature that inspects branch protection. Automation is still specific to the submission branch; a new branch must get correctly scoped deployment routing before it can pass that check.
+
 ## Scope
 
 Started October 16, 2026 (America/Chicago), on `feat/season4-pr-evidence`. Existing Season 3 ledger data is historical; the new default view reads public GitHub evidence bound to the observed head SHA.

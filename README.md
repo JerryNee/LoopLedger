@@ -6,6 +6,8 @@ LoopLedger compares public pull-request checks across commits and reruns. It hig
 
 [Open the Season 4 app](https://loopledger-s4-git-feat-season4-b35ea5-jerrys-projects-82705168.vercel.app) | [Implementation PR](https://github.com/JerryNee/LoopLedger/pull/1) | [Test coverage](docs/season4-test-coverage.md)
 
+[![Strict TestSprite replay](https://github.com/JerryNee/LoopLedger/actions/workflows/testsprite-s4.yml/badge.svg?branch=feat%2Fseason4-pr-evidence)](https://github.com/JerryNee/LoopLedger/actions/workflows/testsprite-s4.yml?query=branch%3Afeat%2Fseason4-pr-evidence)
+
 ## Try the Real Investigation
 
 1. Open **Recorded case**. No account, token, API request, or installation is needed.
@@ -30,7 +32,7 @@ Requests go directly to GitHub's public REST API. No token or backend is require
 
 ## Verified Evidence
 
-The October 26 comparison feature has **67 passing local tests**, plus lint and production build checks. Its deployed nine-case cloud replay is pending in this commit. Use the [PR checks](https://github.com/JerryNee/LoopLedger/pull/1/checks) for the latest result; an older pass does not verify newer code.
+The October 26 comparison feature has **67 passing local tests**, plus lint and production build checks. The strict cloud suite now has nine cases. Use the live badge above and [PR checks and execution notes](https://github.com/JerryNee/LoopLedger/pull/1) for the latest commit-specific result; an older pass does not verify newer code.
 
 The earlier `213172a` implementation has these results:
 
@@ -47,6 +49,8 @@ The [strict workflow](.github/workflows/testsprite-s4.yml) waits for this commit
 This is an inspection aid, **not a merge gate**. TestSprite recognition uses check/app labels, not authenticated publisher identity. It does not verify branch protection, required checks, arbitrary deployment identity, or complete test coverage. Local history is editable, not a signed audit log.
 
 Automation currently covers only `feat/season4-pr-evidence`. The live URL above is its deployment; the older GitHub Pages site and Vercel production alias are not the Season 4 entry.
+
+For this repository, `main` now requires the GitHub Actions checks `Lint and build` and `TestSprite S4 strict suite`, with an up-to-date branch and admin enforcement. A pending strict run blocks PR #1. This repository policy is separate from the app's inspection verdict. Other branches need their own approved preview routing before they can satisfy the strict check; they must not reuse this branch's deployment or bypass protection.
 
 The blocked-download finding is a curated, source-linked investigation, not automated parsing of private TestSprite reports. [Execution history](docs/season4.md) retains the failures and fixes.
 

@@ -10,7 +10,7 @@
     { "id": "2feb0aa9-9405-40f9-8fd3-d918d070540d", "codeFile": ".testsprite/tests/invalid-url-preserves-evidence.py" },
     { "id": "9f9f57e6-83de-4f1d-9d89-864419a266c4" },
     { "id": "878102bb-4641-4cf2-8339-b6f53c463f2c" },
-    { "id": "4cde62d3-1f4d-4b9f-9498-92e84b904c7f" },
+    { "id": "4cde62d3-1f4d-4b9f-9498-92e84b904c7f", "codeFile": ".testsprite/tests/manual-cli-run.py" },
     { "id": "ebaafce5-b2ef-43d2-8a7c-e650332c3a44" }
   ]
 }

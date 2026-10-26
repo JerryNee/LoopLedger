@@ -26,7 +26,7 @@ async def run_test():
             )
             await expect(overview.locator("code")).to_have_text("79054cff4902")
             before = await overview.inner_text()
-            assert "Snapshot:" in before
+            assert "Retrieved:" in before
             await expect(page.get_by_role("tab", name="History (1)", exact=True)).to_be_visible()
 
             await field.fill("https://example.com/nope")
